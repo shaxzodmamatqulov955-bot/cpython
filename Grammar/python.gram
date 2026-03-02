@@ -320,7 +320,7 @@ function_def_raw[stmt_ty]:
                             (params) ? params : CHECK(arguments_ty, _PyPegen_empty_arguments(p)),
                             b, NULL, a, NEW_TYPE_COMMENT(p, tc), t, EXTRA)) }
 
-        ) }
+        
 
 # Function parameters
 # -------------------
