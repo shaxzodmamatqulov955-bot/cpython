@@ -116,33 +116,33 @@ simple_stmts[asdl_stmt_seq*]:
     | a=simple_stmt !';' NEWLINE { (asdl_stmt_seq*)_PyPegen_singleton_seq(p, a) } # Not needed, there for speedup
     | a[asdl_stmt_seq*]=';'.simple_stmt+ [';'] NEWLINE { a }
 
-# NOTE: assignment MUST precede expression, else parsing a simple assignment
-# will throw a SyntaxError.
 simple_stmt[stmt_ty] (memo):
     | assignment
     | &"type" type_alias
-    | &('import' | 'from' | "lazy") import_stmt
+    | &('import' | 'from' | "lazy" | 'yukla' | 'dan' | 'импорт' | 'из' | 'importar' | 'desde' | '导入' | '수입' | '輸入' | 'استيراد' | 'आयात' | 'getir' | 'al') import_stmt
     | e=star_expressions { _PyAST_Expr(e, EXTRA) }
-    | &'return' return_stmt
-    | &'raise' raise_stmt
-    | &'pass' pass_stmt
-    | &'del' del_stmt
-    | &'yield' yield_stmt
-    | &'assert' assert_stmt
-    | &'break' break_stmt
-    | &'continue' continue_stmt
-    | &'global' global_stmt
-    | &'nonlocal' nonlocal_stmt
+    | &('return' | 'qaytar' | 'вернуть' | 'retornar' | 'volver' | '返回' | '반환' | '戻る' | 'إرجاع' | 'वापसी' | 'dön' | 'qaytaru') return_stmt
+    | &('raise' | 'xato' | 'вызвать' | 'lanzar' | 'provocar' | '引发' | '일으키다' | '起こす' | 'رفع' | 'उठाना' | 'hata' | 'tastau') raise_stmt
+    | &('pass' | 'ut' | 'пропустить' | 'pasar' | 'omitir' | '通过' | '통과' | 'パス' | 'تمرير' | 'उत्तीर्ण' | 'geç' | 'öt') pass_stmt
+    | &('del' | 'uchir' | 'удалить' | 'borrar' | 'eliminar' | '删除' | '삭제' | '削除' | 'حذف' | 'मिटाना' | 'sil' | 'öshiru') del_stmt
+    | &('yield' | 'ber' | 'вернуть_из' | 'ceder' | 'producir' | '产出' | '양보' | '産出' | 'إنتاج' | 'उपज' | 'sun') yield_stmt
+    | &('assert' | 'tasdiqla' | 'утверждать' | 'afirmar' | 'asegurar' | '断言' | '주장' | '断言' | 'تأكيد' | 'पुष्टि' | 'onayla') assert_stmt
+    | &('break' | 'tuxtat' | 'прервать' | 'romper' | 'detener' | '中断' | '중단' | '中断' | 'كسر' | 'तोड़ना' | 'dur' | 'toqtatu') break_stmt
+    | &('continue' | 'davom' | 'продолжить' | 'continuar' | 'seguir' | '继续' | '계속' | '継続' | 'استمرار' | 'जारी' | 'devam' | 'jalghastiru') continue_stmt
+    | &('global' | 'global' | 'глобальный' | 'mundial' | '全局' | '전역' | 'グローバル' | 'عالمي' | 'वैश्विक' | 'küresel' | 'jahandiq') global_stmt
+    | &('nonlocal' | 'nomahalliy' | 'нелокальный' | 'no_local' | '非本地' | '비지역' | '非局所' | 'غير_محلي' | 'गैर-स्थानीय' | 'yerel_olmayan') nonlocal_stmt
+
 
 compound_stmt[stmt_ty]:
-    | &('def' | '@' | 'async') function_def
-    | &'if' if_stmt
-    | &('class' | '@') class_def
-    | &('with' | 'async') with_stmt
-    | &('for' | 'async') for_stmt
-    | &'try' try_stmt
-    | &'while' while_stmt
+    | &('def' | 'funksiya' | 'функция' | 'definir' | '函数' | '함수' | '関数' | 'وظيفة' | 'tanımla' | 'анықтау' | '@' | 'async') function_def
+    | &('if' | 'agar' | 'если' | 'si' | '如果' | '만약' | 'もし' | 'إذا' | 'eğer' | 'егер') if_stmt
+    | &('class' | 'sinf' | 'класс' | 'clase' | '类' | '클래스' | 'クラス' | 'فئة' | 'sınıf' | 'класс' | '@') class_def
+    | &('with' | 'bilan' | 'с' | 'con' | '与' | '함께' | 'で' | 'مع' | 'ile' | 'бірге' | 'async') with_stmt
+    | &('for' | 'uchun' | 'для' | 'para' | 'por' | '对于' | '위해' | 'ため' | 'لأجل' | 'için' | 'үшін' | 'async') for_stmt
+    | &('try' | 'urin' | 'попробовать' | 'intentar' | '尝试' | '시도' | '試す' | 'محاولة' | 'dene' | 'көру') try_stmt
+    | &('while' | 'toki' | 'пока' | 'mientras' | '只要' | '동안' | 'の間' | 'طالما' | 'iken' | 'дейін') while_stmt
     | match_stmt
+
 
 # SIMPLE STATEMENTS
 # =================
@@ -183,38 +183,48 @@ augassign[AugOperator*]:
     | '//=' { _PyPegen_augoperator(p, FloorDiv) }
 
 return_stmt[stmt_ty]:
-    | 'return' a=[star_expressions] { _PyAST_Return(a, EXTRA) }
+    | ('return' | 'qaytar' | 'вернуть' | 'retornar' | 'volver' | 'dön' | 'qaytaru' | '返回' | '반환' | '戻る' | 'إرجاع' | 'वापसी') a=[star_expressions] { _PyAST_Return(a, EXTRA) }
 
 raise_stmt[stmt_ty]:
-    | 'raise' a=expression 'from' b=expression { _PyAST_Raise(a, b, EXTRA) }
+    | ('raise' | 'xato' | 'вызвать' | 'lanzar' | '引发' | '일으키다' | '起こす' | 'رفع' | 'उठाना' | 'hata' | 'tastau') a=expression ('from' | 'dan' | 'из' | 'desde' | '从' | '에서' | 'から' | 'من' | 'से' | 'dan' | 'dan') b=expression { _PyAST_Raise(a, b, EXTRA) }
     | invalid_raise_stmt
-    | 'raise' a=expression { _PyAST_Raise(a, NULL, EXTRA) }
-    | 'raise' { _PyAST_Raise(NULL, NULL, EXTRA) }
+    | ('raise' | 'xato' | 'вызвать' | 'lanzar' | '引发' | '일으키다' | '起こす' | 'رفع' | 'उठाना' | 'hata' | 'tastau') a=expression { _PyAST_Raise(a, NULL, EXTRA) }
+    | ('raise' | 'xato' | 'вызвать' | 'lanzar' | '引发' | '일으키다' | '起こす' | 'رفع' | 'उठाना' | 'hata' | 'tastau') { _PyAST_Raise(NULL, NULL, EXTRA) }
+
 
 pass_stmt[stmt_ty]:
-    | 'pass' { _PyAST_Pass(EXTRA) }
+    | ('pass' | 'ut' | 'пропустить' | 'pasar' | 'geç' | 'öt' | '通过' | '통과' | 'パス' | 'تمرير' | 'उत्तीर्ण') { _PyAST_Pass(EXTRA) }
+
+
 
 break_stmt[stmt_ty]:
-    | 'break' { _PyAST_Break(EXTRA) }
+    | ('break' | 'tuxtat' | 'прервать' | 'romper' | '中断' | '중단' | '中断' | 'كسر' | 'तोड़ना' | 'dur' | 'toqtatu') { _PyAST_Break(EXTRA) }
+
 
 continue_stmt[stmt_ty]:
-    | 'continue' { _PyAST_Continue(EXTRA) }
+    | ('continue' | 'davom' | 'продолжить' | 'continuar' | '继续' | '계속' | '継続' | 'استمرار' | 'जारी' | 'devam' | 'jalghastiru') { _PyAST_Continue(EXTRA) }
 
-global_stmt[stmt_ty]: 'global' a[asdl_expr_seq*]=','.NAME+ {
-    _PyAST_Global(CHECK(asdl_identifier_seq*, _PyPegen_map_names_to_ids(p, a)), EXTRA) }
 
-nonlocal_stmt[stmt_ty]: 'nonlocal' a[asdl_expr_seq*]=','.NAME+ {
-    _PyAST_Nonlocal(CHECK(asdl_identifier_seq*, _PyPegen_map_names_to_ids(p, a)), EXTRA) }
+
+global_stmt[stmt_ty]: 
+    | ('global' | 'global' | 'глобальный' | 'mundial' | '全局' | '전역' | 'グローバル' | 'عالمي' | 'वैश्विक' | 'küresel' | 'jahandiq') a[asdl_expr_seq*]=','.NAME+ {
+        _PyAST_Global(CHECK(asdl_identifier_seq*, _PyPegen_map_names_to_ids(p, a)), EXTRA) }
+
+nonlocal_stmt[stmt_ty]: 
+    | ('nonlocal' | 'nomahalliy' | 'нелокальный' | 'no_local' | 'yerel_olmayan' | 'jergilikti_emes' | '非本地' | '비지역' | '非局所' | 'غير_محلي' | 'गैर-स्थानीय') a[asdl_expr_seq*]=','.NAME+ {
+        _PyAST_Nonlocal(CHECK(asdl_identifier_seq*, _PyPegen_map_names_to_ids(p, a)), EXTRA) }
 
 del_stmt[stmt_ty]:
-    | 'del' a=del_targets &(';' | NEWLINE) { _PyAST_Delete(a, EXTRA) }
+    | ('del' | 'uchir' | 'удалить' | 'borrar' | 'eliminar' | 'sil' | 'öshiru' | '删除' | '삭제' | '削除' | 'حذف' | 'मिटाना') a=del_targets &(';' | NEWLINE) { _PyAST_Delete(a, EXTRA) }
     | invalid_del_stmt
 
-yield_stmt[stmt_ty]: y=yield_expr { _PyAST_Expr(y, EXTRA) }
+
+yield_stmt[stmt_ty]: 
+    | y=yield_expr { _PyAST_Expr(y, EXTRA) }
 
 assert_stmt[stmt_ty]:
     | invalid_assert_stmt
-    | 'assert' a=expression b=[',' z=expression { z }] { _PyAST_Assert(a, b, EXTRA) }
+    | ('assert' | 'tasdiqla' | 'утверждать' | 'afirmar' | 'onayla' | 'rastau' | '断言' | '주장' | 'تأكيد' | 'पुष्टि') a=expression b=[',' z=expression { z }] { _PyAST_Assert(a, b, EXTRA) }
 
 import_stmt[stmt_ty](memo):
     | invalid_import
@@ -225,32 +235,36 @@ import_stmt[stmt_ty](memo):
 # -----------------
 
 import_name[stmt_ty]:
-    | lazy="lazy"? 'import' a=dotted_as_names { _PyAST_Import(a, lazy ? 1 : 0, EXTRA) }
+    | lazy="lazy"? ('import' | 'yukla' | 'импорт' | 'importar' | 'getir' | 'akel' | '导入' | '수입' | '輸入' | 'استيراد' | 'आयात') a=dotted_as_names { _PyAST_Import(a, lazy ? 1 : 0, EXTRA) }
 
-# note below: the ('.' | '...') is necessary because '...' is tokenized as ELLIPSIS
 import_from[stmt_ty]:
-    | lazy="lazy"? 'from' a=('.' | '...')* b=dotted_name 'import' c=import_from_targets {
-        _PyPegen_checked_future_import(p, b->v.Name.id, c, _PyPegen_seq_count_dots(a), lazy, EXTRA) }
-    | lazy="lazy"? 'from' a=('.' | '...')+ 'import' b=import_from_targets {
+    | lazy="lazy"? ('from' | 'dan' | 'из' | 'desde' | 'den' | '从' | '에서' | 'から' | 'من' | 'से') a=('.' | '...')* b=dotted_name ('import' | 'yukla' | 'импорт' | 'importar' | 'getir' | 'akel' | '导入' | '수입' | '輸入' | 'استيراد' | 'आयात') c=import_from_targets {
+        _PyPegen_checked_future_import(p, b->v.Name.id, c, _PyPegen_seq_count_dots(a), lazy ? 1 : 0, EXTRA) }
+    | lazy="lazy"? ('from' | 'dan' | 'из' | 'desde' | 'den' | 'dan' | '从' | '에서' | 'から' | 'من' | 'से') a=('.' | '...')+ ('import' | 'yukla' | 'импорт' | 'importar' | 'getir' | 'akel' | '导入' | '수입' | '輸入' | 'استيراد' | 'आयात') b=import_from_targets {
         _PyAST_ImportFrom(NULL, b, _PyPegen_seq_count_dots(a), lazy ? 1 : 0, EXTRA) }
+
 import_from_targets[asdl_alias_seq*]:
     | '(' a=import_from_as_names [','] ')' { a }
     | import_from_as_names !','
     | '*' { (asdl_alias_seq*)_PyPegen_singleton_seq(p, CHECK(alias_ty, _PyPegen_alias_for_star(p, EXTRA))) }
     | invalid_import_from_targets
+
 import_from_as_names[asdl_alias_seq*]:
     | a[asdl_alias_seq*]=','.import_from_as_name+ { a }
+
 import_from_as_name[alias_ty]:
     | invalid_import_from_as_name
-    | a=NAME b=['as' z=NAME { z }] { _PyAST_alias(
+    | a=NAME b=[('as' | 'sifatida' | 'как' | 'como' | 'olarak' | 'retinde' | '作为' | '로' | 'として' | 'كـ' | 'रूप_में') z=NAME { z }] { _PyAST_alias(
         a->v.Name.id, (b) ? ((expr_ty) b)->v.Name.id : NULL, EXTRA) }
 
 dotted_as_names[asdl_alias_seq*]:
     | a[asdl_alias_seq*]=','.dotted_as_name+ { a }
+
 dotted_as_name[alias_ty]:
     | invalid_dotted_as_name
-    | a=dotted_name b=['as' z=NAME { z }] { _PyAST_alias(
+    | a=dotted_name b=[('as' | 'sifatida' | 'как' | 'como' | 'olarak' | 'retinde' | '作为' | '로' | 'として' | 'كـ' | 'रूप_में') z=NAME { z }] { _PyAST_alias(
         a->v.Name.id, (b) ? ((expr_ty) b)->v.Name.id : NULL, EXTRA) }
+
 
 dotted_name[expr_ty]:
     | a=dotted_name '.' b=NAME { _PyPegen_join_names_with_dot(p, a, b) }
@@ -278,7 +292,7 @@ class_def[stmt_ty]:
 
 class_def_raw[stmt_ty]:
     | invalid_class_def_raw
-    | 'class' a=NAME t=[type_params] b=['(' z=[arguments] ')' { z }] ':' c=block {
+    | ('class' | 'sinf' | 'klass' | 'класс' | 'clase' | 'sınıf' | 'tap' | '类' | '클래스' | 'クラス' | 'فئة' | 'श्रेणी') a=NAME t=[type_params] b=['(' z=[arguments] ')' { z }] ':' c=block {
         _PyAST_ClassDef(a->v.Name.id,
                      (b) ? ((expr_ty) b)->v.Call.args : NULL,
                      (b) ? ((expr_ty) b)->v.Call.keywords : NULL,
@@ -293,18 +307,19 @@ function_def[stmt_ty]:
 
 function_def_raw[stmt_ty]:
     | invalid_def_raw
-    | 'def' n=NAME t=[type_params] '(' params=[params] ')' a=['->' z=expression { z }] ':' tc=[func_type_comment] b=block {
+    | ('def' | 'funksiya' | 'tanim' | 'функция' | 'definir' | 'tanımla' | 'anyqtau' | '定义' | '정의' | '定義' | 'تعريف' | 'परिभाषा') n=NAME t=[type_params] '(' params=[params] ')' a=['->' z=expression { z }] ':' tc=[func_type_comment] b=block {
         _PyAST_FunctionDef(n->v.Name.id,
                         (params) ? params : CHECK(arguments_ty, _PyPegen_empty_arguments(p)),
                         b, NULL, a, NEW_TYPE_COMMENT(p, tc), t, EXTRA) }
-    | 'async' 'def' n=NAME t=[type_params] '(' params=[params] ')' a=['->' z=expression { z }] ':' tc=[func_type_comment] b=block {
+    | ('async' | 'asinxron' | 'асинхронный' | 'asincron' | 'eşzamansız' | 'asinxronda' | '异步' | '비동기' | '非同期' | 'غير_متزامن' | 'अतुल्यकालिक') ('def' | 'funksiya' | 'tanim' | 'функция' | 'definir' | 'tanımla' | 'anyqtau' | '定义' | '정의' | '定義' | 'تعريف' | 'परिभाषा') n=NAME t=[type_params] '(' params=[params] ')' a=['->' z=expression { z }] ':' tc=[func_type_comment] b=block {
         CHECK_VERSION(
             stmt_ty,
             5,
             "Async functions are",
             _PyAST_AsyncFunctionDef(n->v.Name.id,
                             (params) ? params : CHECK(arguments_ty, _PyPegen_empty_arguments(p)),
-                            b, NULL, a, NEW_TYPE_COMMENT(p, tc), t, EXTRA)
+                            b, NULL, a, NEW_TYPE_COMMENT(p, tc), t, EXTRA)) }
+
         ) }
 
 # Function parameters
@@ -384,53 +399,57 @@ default[expr_ty]: '=' a=expression { a } | invalid_default
 
 if_stmt[stmt_ty]:
     | invalid_if_stmt
-    | 'if' a=named_expression ':' b=block c=elif_stmt {
+    | ('if' | 'agar' | 'если' | 'si' | 'eğer' | 'eger' | '如果' | '만약' | 'もし' | 'إذا' | 'यदि') a=named_expression ':' b=block c=elif_stmt {
         _PyAST_If(a, b, CHECK(asdl_stmt_seq*, _PyPegen_singleton_seq(p, c)), EXTRA) }
-    | 'if' a=named_expression ':' b=block c=[else_block] { _PyAST_If(a, b, c, EXTRA) }
+    | ('if' | 'agar' | 'если' | 'si' | 'eğer' | 'eger' | '如果' | '만약' | 'もし' | 'إذا' | 'यदि') a=named_expression ':' b=block c=[else_block] { _PyAST_If(a, b, c, EXTRA) }
+
 elif_stmt[stmt_ty]:
     | invalid_elif_stmt
-    | 'elif' a=named_expression ':' b=block c=elif_stmt {
+    | ('elif' | 'aks_holda_agar' | 'иначе_если' | 'sino_si' | 'yoksa_eğer' | 'bolmasa_eger' | '否则如果' | '아니면_만약' | 'あるいはもし' | 'وإلا_إذا' | 'अन्यथा_यदि') a=named_expression ':' b=block c=elif_stmt {
         _PyAST_If(a, b, CHECK(asdl_stmt_seq*, _PyPegen_singleton_seq(p, c)), EXTRA) }
-    | 'elif' a=named_expression ':' b=block c=[else_block] { _PyAST_If(a, b, c, EXTRA) }
+    | ('elif' | 'aks_holda_agar' | 'иначе_если' | 'sino_si' | 'yoksa_eğer' | 'bolmasa_eger' | '否则如果' | '아니면_만약' | 'あるいはもし' | 'وإلا_إذا' | 'अन्यथा_यदि') a=named_expression ':' b=block c=[else_block] { _PyAST_If(a, b, c, EXTRA) }
+
 else_block[asdl_stmt_seq*]:
     | invalid_else_stmt
-    | 'else' &&':' b=block { b }
+    | ('else' | 'aks_holda' | 'иначе' | 'sino' | 'yoksa' | 'bolmasa' | '否则' | 'else' | '아니면' | 'その他' | 'وإلا' | 'अन्यथा') &&':' b=block { b }
 
 # While statement
 # ---------------
 
 while_stmt[stmt_ty]:
     | invalid_while_stmt
-    | 'while' a=named_expression ':' b=block c=[else_block] { _PyAST_While(a, b, c, EXTRA) }
+    | ('while' | 'toki' | 'davomida' | 'poka' | 'пока' | 'mientras' | 'iken' | 'olduğunda' | '只要' | '동안' | 'の間' | 'طالما' | 'जब_तक') a=named_expression ':' b=block c=[else_block] { _PyAST_While(a, b, c, EXTRA) }
 
 # For statement
 # -------------
 
 for_stmt[stmt_ty]:
     | invalid_for_stmt
-    | 'for' t=star_targets 'in' ~ ex=star_expressions ':' tc=[TYPE_COMMENT] b=block el=[else_block] {
+    | ('for' | 'uchun' | 'для' | 'para' | 'için' | 'üshin' | '对于' | '위해' | 'ため' | 'لأجل' | 'के_लिए') t=star_targets ('in' | 'ichida' | 'в' | 'en' | 'içinde' | 'isinde' | '在' | '안에' | 'の中で' | 'في' | 'में') ~ ex=star_expressions ':' tc=[TYPE_COMMENT] b=block el=[else_block] {
         _PyAST_For(t, ex, b, el, NEW_TYPE_COMMENT(p, tc), EXTRA) }
-    | 'async' 'for' t=star_targets 'in' ~ ex=star_expressions ':' tc=[TYPE_COMMENT] b=block el=[else_block] {
+    | ('async' | 'asinxron' | 'асинхронный' | 'asincron' | 'eşzamansız' | 'asinxronda' | '异步' | '비동기' | '非同期' | 'غير_متزامن' | 'अतुल्यकालिक') ('for' | 'uchun' | 'для' | 'para' | 'için' | 'üshin' | '对于' | '위해' | 'ため' | 'لأجل' | 'के_लिए') t=star_targets ('in' | 'ichida' | 'в' | 'en' | 'içinde' | 'isinde' | '在' | '안에' | 'の中で' | 'في' | 'में') ~ ex=star_expressions ':' tc=[TYPE_COMMENT] b=block el=[else_block] {
         CHECK_VERSION(stmt_ty, 5, "Async for loops are", _PyAST_AsyncFor(t, ex, b, el, NEW_TYPE_COMMENT(p, tc), EXTRA)) }
     | invalid_for_target
+
 
 # With statement
 # --------------
 
 with_stmt[stmt_ty]:
     | invalid_with_stmt_indent
-    | 'with' '(' a[asdl_withitem_seq*]=','.with_item+ ','? ')' ':' tc=[TYPE_COMMENT] b=block {
+    | ('with' | 'bilan' | 'с' | 'con' | 'ile' | 'menen' | '随着' | '함께' | 'と共に' | 'مع' | 'के_साथ') '(' a[asdl_withitem_seq*]=','.with_item+ ','? ')' ':' tc=[TYPE_COMMENT] b=block {
        _PyAST_With(a, b, NEW_TYPE_COMMENT(p, tc), EXTRA) }
-    | 'with' a[asdl_withitem_seq*]=','.with_item+ ':' tc=[TYPE_COMMENT] b=block {
+    | ('with' | 'bilan' | 'с' | 'con' | 'ile' | 'menen' | '随着' | '함께' | 'と共に' | 'مع' | 'के_साथ') a[asdl_withitem_seq*]=','.with_item+ ':' tc=[TYPE_COMMENT] b=block {
         _PyAST_With(a, b, NEW_TYPE_COMMENT(p, tc), EXTRA) }
-    | 'async' 'with' '(' a[asdl_withitem_seq*]=','.with_item+ ','? ')' ':' b=block {
+    | ('async' | 'asinxron' | 'асинхронный' | 'asincron' | 'eşzamansız' | 'asinxronda' | '异步' | '비동기' | '非同期' | 'غير_متزامن' | 'अतुल्यकालिक') ('with' | 'bilan' | 'с' | 'con' | 'ile' | 'menen' | '随着' | '함께' | 'と共に' | 'مع' | 'के_साथ') '(' a[asdl_withitem_seq*]=','.with_item+ ','? ')' ':' b=block {
        CHECK_VERSION(stmt_ty, 5, "Async with statements are", _PyAST_AsyncWith(a, b, NULL, EXTRA)) }
-    | 'async' 'with' a[asdl_withitem_seq*]=','.with_item+ ':' tc=[TYPE_COMMENT] b=block {
+    | ('async' | 'asinxron' | 'асинхronniy' | 'asincron' | 'eşzamansız' | 'asinxronda' | '异步' | '비동기' | '非同期' | 'غير_متزامن' | 'अतुल्यकालिक') ('with' | 'bilan' | 'с' | 'con' | 'ile' | 'menen' | '随着' | '함께' | 'と共に' | 'مع' | 'के_साथ') a[asdl_withitem_seq*]=','.with_item+ ':' tc=[TYPE_COMMENT] b=block {
        CHECK_VERSION(stmt_ty, 5, "Async with statements are", _PyAST_AsyncWith(a, b, NEW_TYPE_COMMENT(p, tc), EXTRA)) }
     | invalid_with_stmt
 
+
 with_item[withitem_ty]:
-    | e=expression 'as' t=star_target &(',' | ')' | ':') { _PyAST_withitem(e, t, p->arena) }
+    | e=expression ('as' | 'sifatida' | 'как' | 'como' | 'olarak' | 'retinde' | '作为' | '로' | 'として' | 'كـ' | 'के_रूप_में') t=star_target &(',' | ')' | ':') { _PyAST_withitem(e, t, p->arena) }
     | invalid_with_item
     | e=expression { _PyAST_withitem(e, NULL, p->arena) }
 
@@ -439,8 +458,8 @@ with_item[withitem_ty]:
 
 try_stmt[stmt_ty]:
     | invalid_try_stmt
-    | ('try' | 'urinish' | 'popytka') && ':' b=block f=finally_block { _PyAST_Try(b, NULL, NULL, f, EXTRA) }
-    | ('try' | 'urinish' | 'popytka') && ':' b=block ex[asdl_excepthandler_seq*]=except_block+ el=[else_block] f=[finally_block] { _PyAST_Try(b, ex, el, f, EXTRA) }
+    | ('try' | 'harakat_qil' | 'urin' | 'urinish' | 'попробуй' | 'попытка' | 'intentar' | 'dene' | 'kör' | '尝试' | '시도' | '試す' | 'حاول' | 'प्रयास') &&':' b=block f=finally_block { _PyAST_Try(b, NULL, NULL, f, EXTRA) }
+    | ('try' | 'harakat_qil' | 'urin' | 'urinish' | 'попробуй' | 'попытка' | 'intentar' | 'dene' | 'kör' | '尝试' | '시도' | '試す' | 'حاول' | 'प्रयास') &&':' b=block ex[asdl_excepthandler_seq*]=except_block+ el=[else_block] f=[finally_block] { _PyAST_Try(b, ex, el, f, EXTRA) }
 
 
 
@@ -449,71 +468,79 @@ try_stmt[stmt_ty]:
 
 except_block[excepthandler_ty]:
     | invalid_except_stmt_indent
-    | 'except' e=expression ':' b=block {
+    | ('except' | 'mustasno' | 'agar_xato' | 'исключая' | 'кроме' | 'excepto' | 'hariç' | 'istisno' | '除了' | '제외하고' | '除いて' | 'عدا' | 'के_अलावा') e=expression ':' b=block {
         _PyAST_ExceptHandler(e, NULL, b, EXTRA) }
-    | 'except' e=expression 'as' t=NAME ':' b=block {
+    | ('except' | 'mustasno' | 'agar_xato' | 'исключая' | 'кроме' | 'excepto' | 'hariç' | 'istisno' | '除了' | '제외하고' | '除いて' | 'عدا' | 'के_अलावा') e=expression ('as' | 'sifatida' | 'как' | 'como' | 'olarak' | 'retinde') t=NAME ':' b=block {
         _PyAST_ExceptHandler(e, ((expr_ty) t)->v.Name.id, b, EXTRA) }
-    | 'except' e=expressions ':' b=block {
+    | ('except' | 'mustasno' | 'agar_xato' | 'исключая' | 'кроме' | 'excepto' | 'hariç' | 'istisno' | '除了' | '제외하고' | '除いて' | 'عدا' | 'के_अलावा') e=expressions ':' b=block {
         CHECK_VERSION(
             excepthandler_ty,
             14,
             "except expressions without parentheses are",
             _PyAST_ExceptHandler(e, NULL, b, EXTRA)) }
-    | 'except' ':' b=block { _PyAST_ExceptHandler(NULL, NULL, b, EXTRA) }
+    | ('except' | 'mustasno' | 'agar_xato' | 'исключая' | 'кроме' | 'excepto' | 'hariç' | 'istisno' | '除了' | '제외하고' | '除いて' | 'عدا' | 'के_अलावा') ':' b=block { _PyAST_ExceptHandler(NULL, NULL, b, EXTRA) }
     | invalid_except_stmt
+
 except_star_block[excepthandler_ty]:
     | invalid_except_star_stmt_indent
-    | 'except' '*' e=expression ':' b=block {
+    | ('except' | 'mustasno' | 'agar_xato') '*' e=expression ':' b=block {
         _PyAST_ExceptHandler(e, NULL, b, EXTRA) }
-    | 'except' '*' e=expression 'as' t=NAME ':' b=block {
+    | ('except' | 'mustasno' | 'agar_xato') '*' e=expression ('as' | 'sifatida' | 'как') t=NAME ':' b=block {
         _PyAST_ExceptHandler(e, ((expr_ty) t)->v.Name.id, b, EXTRA) }
-    | 'except' '*' e=expressions ':' b=block {
+    | ('except' | 'mustasno' | 'agar_xato') '*' e=expressions ':' b=block {
         CHECK_VERSION(
             excepthandler_ty,
             14,
             "except expressions without parentheses are",
             _PyAST_ExceptHandler(e,  NULL, b, EXTRA)) }
     | invalid_except_star_stmt
+
 finally_block[asdl_stmt_seq*]:
     | invalid_finally_stmt
-    | 'finally' &&':' a=block { a }
+    | ('finally' | 'oxiri' | 'yakun' | 'в_конце' | 'наконец' | 'finalmente' | 'sonunda' | 'aqyry' | '最后' | '마침내' | 'ついに' | 'أخيرا' | 'अंत_में') &&':' a=block { a }
+
 
 # Match statement
 # ---------------
 
 match_stmt[stmt_ty]:
-    | "match" subject=subject_expr ':' NEWLINE INDENT cases[asdl_match_case_seq*]=case_block+ DEDENT {
+    | ("match" | "moslik" | "solishtir" | "tekshir" | "сопоставь" | "совпадение" | "coincidir" | "eşleştir" | "säikes" | "匹配" | "매치" | "マッチ" | "تطابق" | "मिलान") subject=subject_expr ':' NEWLINE INDENT cases[asdl_match_case_seq*]=case_block+ DEDENT {
         CHECK_VERSION(stmt_ty, 10, "Pattern matching is", _PyAST_Match(subject, cases, EXTRA)) }
     | invalid_match_stmt
+
 
 subject_expr[expr_ty]:
     | value=star_named_expression ',' values=star_named_expressions? {
         _PyAST_Tuple(CHECK(asdl_expr_seq*, _PyPegen_seq_insert_in_front(p, value, values)), Load, EXTRA) }
     | named_expression
 
+
 case_block[match_case_ty]:
     | invalid_case_block
-    | "case" pattern=patterns guard=guard? ':' body=block {
+    | ("case" | "holat" | "vaziyat" | "sharoit" | "случай" | "caso" | "durum" | "jağday" | "情形" | "경우" | "場合" | "मामला" | "حالة") pattern=patterns guard=guard? ':' body=block {
         _PyAST_match_case(pattern, guard, body, p->arena) }
 
-guard[expr_ty]: 'if' guard=named_expression { guard }
+guard[expr_ty]: ('if' | 'agar' | 'если' | 'si' | 'eğer' | 'eger' | '如果' | '만약' | 'もし' | 'यदि' | 'إذا') guard=named_expression { guard }
 
 patterns[pattern_ty]:
     | patterns[asdl_pattern_seq*]=open_sequence_pattern {
         _PyAST_MatchSequence(patterns, EXTRA) }
     | pattern
 
+
 pattern[pattern_ty]:
     | as_pattern
     | or_pattern
 
+
 as_pattern[pattern_ty]:
-    | pattern=or_pattern 'as' target=pattern_capture_target {
+    | pattern=or_pattern ('as' | 'sifatida' | 'sifat' | 'как' | 'como' | '作为' | '로' | 'として' | 'के_रूप_में' | 'als' | 'olarak') target=pattern_capture_target {
         _PyAST_MatchAs(pattern, target->v.Name.id, EXTRA) }
     | invalid_as_pattern
 
+
 or_pattern[pattern_ty]:
-    | patterns[asdl_pattern_seq*]='|'.closed_pattern+ {
+    | patterns[asdl_pattern_seq*]=('|' | 'yoki' | 'или' | 'o' | 'veya' | '或者' | '또는' | 'または' | 'या' | 'أو').closed_pattern+ {
         asdl_seq_LEN(patterns) == 1 ? asdl_seq_GET(patterns, 0) : _PyAST_MatchOr(patterns, EXTRA) }
 
 closed_pattern[pattern_ty] (memo):
@@ -531,18 +558,18 @@ literal_pattern[pattern_ty]:
     | value=signed_number !('+' | '-') { _PyAST_MatchValue(value, EXTRA) }
     | value=complex_number { _PyAST_MatchValue(value, EXTRA) }
     | value=strings { _PyAST_MatchValue(value, EXTRA) }
-    | 'None' { _PyAST_MatchSingleton(Py_None, EXTRA) }
-    | 'True' { _PyAST_MatchSingleton(Py_True, EXTRA) }
-    | 'False' { _PyAST_MatchSingleton(Py_False, EXTRA) }
+    | ('None' | 'Yoq' | 'MavjudEmas' | 'Пусто' | '无' | 'なし' | '없음' | 'لا_شيء' | 'null') { _PyAST_MatchSingleton(Py_None, EXTRA) }
+    | ('True' | 'Rost' | 'Haqiqat' | 'To'gri' | 'Истина' | 'Verdad' | '正确' | '本当' | '참' | 'सत्य' | 'صحيح') { _PyAST_MatchSingleton(Py_True, EXTRA) }
+    | ('False' | 'Yolgon' | 'Xato' | 'Ложь' | 'Falso' | '错误' | '嘘' | '거짓' | 'असत्य' | 'خطأ') { _PyAST_MatchSingleton(Py_False, EXTRA) }
 
 # Literal expressions are used to restrict permitted mapping pattern keys
 literal_expr[expr_ty]:
     | signed_number !('+' | '-')
     | complex_number
     | &(STRING|FSTRING_START|TSTRING_START) strings
-    | 'None' { _PyAST_Constant(Py_None, NULL, EXTRA) }
-    | 'True' { _PyAST_Constant(Py_True, NULL, EXTRA) }
-    | 'False' { _PyAST_Constant(Py_False, NULL, EXTRA) }
+    | ('None' | 'Yoq' | 'MavjudEmas' | 'Пусто' | '无' | 'なし' | '없음' | 'لا_شيء' | 'null') { _PyAST_Constant(Py_None, NULL, EXTRA) }
+    | ('True' | 'Rost' | 'Haqiqat' | 'To'gri' | 'Истина' | 'Verdad' | '正确' | '本当' | '참' | 'सत्य' | 'صحيح') { _PyAST_Constant(Py_True, NULL, EXTRA) }
+    | ('False' | 'Yolgon' | 'Xato' | 'Ложь' | 'Falso' | '错误' | '嘘' | '거짓' | 'असत्य' | 'خطأ') { _PyAST_Constant(Py_False, NULL, EXTRA) }
 
 complex_number[expr_ty]:
     | real=signed_real_number '+' imag=imaginary_number {
@@ -572,7 +599,8 @@ pattern_capture_target[expr_ty]:
         _PyPegen_set_expr_context(p, name, Store) }
 
 wildcard_pattern[pattern_ty]:
-    | "_" { _PyAST_MatchAs(NULL, NULL, EXTRA) }
+    | ("_" | "boshqa" | "qolgani" | "прочее" | "остальное" | "其他" | "기타" | "その他" | "otro" | "अन्य" | "أخرى") { 
+        _PyAST_MatchWildcard(EXTRA) }
 
 value_pattern[pattern_ty]:
     | attr=attr !('.' | '(' | '=') { _PyAST_MatchValue(attr, EXTRA) }
@@ -604,9 +632,9 @@ maybe_star_pattern[pattern_ty]:
     | pattern
 
 star_pattern[pattern_ty] (memo):
-    | '*' target=pattern_capture_target {
+    | ('*' | 'yig_barchasini' | 'собери' | 'collect') target=pattern_capture_target {
         _PyAST_MatchStar(target->v.Name.id, EXTRA) }
-    | '*' wildcard_pattern {
+    | ('*' | 'yig_barchasini' | 'собери' | 'collect') wildcard_pattern {
         _PyAST_MatchStar(NULL, EXTRA) }
 
 mapping_pattern[pattern_ty]:
@@ -636,7 +664,7 @@ key_value_pattern[KeyPatternPair*]:
         _PyPegen_key_pattern_pair(p, key, pattern) }
 
 double_star_pattern[expr_ty]:
-    | '**' target=pattern_capture_target { target }
+    | ('**' | 'yig_lugatni' | 'собери_словарь' | 'collect_map') target=pattern_capture_target { target }
 
 class_pattern[pattern_ty]:
     | cls=name_or_attr '(' ')' {
@@ -717,11 +745,27 @@ expression[expr_ty] (memo):
     | lambdef
 
 if_expression[expr_ty]:
-    | a=disjunction 'if' b=disjunction 'else' c=expression { _PyAST_IfExp(b, a, c, EXTRA) }
+    | a=disjunction ('if' | 'agar') b=disjunction ('else' | 'aks_holda' | 'yo_qsa') c=expression { 
+        _PyAST_IfExp(b, a, c, EXTRA) 
+    }if_expression[expr_ty]:
+    | a=disjunction (
+        'if' | 'agar' | 'если' | 'si' | '如果' | '만약' | 'यदि' | 'إذا'
+      ) b=disjunction (
+        'else' | 'aks_holda' | 'иначе' | 'sino' | '否则' | '그렇지_않으면' | 'अन्यथा' | 'إلا'
+      ) c=expression { 
+        _PyAST_IfExp(b, a, c, EXTRA) 
+    }
+
 
 yield_expr[expr_ty]:
-    | 'yield' 'from' a=expression { _PyAST_YieldFrom(a, EXTRA) }
-    | 'yield' a=[star_expressions] { _PyAST_Yield(a, EXTRA) }
+    | (
+        'yield' | 'uzat' | 'передать' | 
+        '产生' | '생산' | 'पैदावार' | 'أنتج'
+      ) 'from' a=expression { _PyAST_YieldFrom(a, EXTRA) }
+    | (
+        'yield' | 'uzat' | 'передать' | 
+        '产生' | '생산' | 'पैदावार' | 'أنتج'
+      ) a=[star_expressions] { _PyAST_Yield(a, EXTRA) }
 
 star_expressions[expr_ty]:
     | a=star_expression b=(',' c=star_expression { c })+ [','] {
@@ -756,22 +800,33 @@ named_expression[expr_ty]:
     | expression !':='
 
 disjunction[expr_ty] (memo):
-    | a=conjunction b=('or' c=conjunction { c })+ { _PyAST_BoolOp(
+    | a=conjunction b=(
+        ( 'or' | 'yoki' | 'или' | '或者' | '또는' | 'या' | 'أو' | 'si' | 'ou' ) 
+        c=conjunction { c }
+      )+ { _PyAST_BoolOp(
         Or,
         CHECK(asdl_expr_seq*, _PyPegen_seq_insert_in_front(p, a, b)),
         EXTRA) }
     | conjunction
 
+
 conjunction[expr_ty] (memo):
-    | a=inversion b=('and' c=inversion { c })+ { _PyAST_BoolOp(
+    | a=inversion b=(
+        ( 'and' | 'va' | 'и' | '并且' | '그리고' | 'और' | 'و' | 'y' | 'et' ) 
+        c=inversion { c }
+      )+ { _PyAST_BoolOp(
         And,
         CHECK(asdl_expr_seq*, _PyPegen_seq_insert_in_front(p, a, b)),
         EXTRA) }
     | inversion
 
+
 inversion[expr_ty] (memo):
-    | 'not' a=inversion { _PyAST_UnaryOp(Not, a, EXTRA) }
+    | ( 
+        'not' | 'emas' | 'не' | '不' | '아니' | 'नहीं' | 'لا' | 'no' | 'pas' 
+      ) a=inversion { _PyAST_UnaryOp(Not, a, EXTRA) }
     | comparison
+
 
 # Comparison operators
 # --------------------
@@ -786,28 +841,45 @@ comparison[expr_ty]:
     | bitwise_or
 
 compare_op_bitwise_or_pair[CmpopExprPair*]:
-    | eq_bitwise_or
-    | noteq_bitwise_or
-    | lte_bitwise_or
-    | lt_bitwise_or
-    | gte_bitwise_or
-    | gt_bitwise_or
-    | notin_bitwise_or
-    | in_bitwise_or
-    | isnot_bitwise_or
-    | is_bitwise_or
+    | eq_bitwise_or      # Tenglik (==)
+    | noteq_bitwise_or   # Teng emas (!=)
+    | lte_bitwise_or     # Kichik yoki teng (<=)
+    | lt_bitwise_or      # Kichik (<)
+    | gte_bitwise_or     # Katta yoki teng (>=)
+    | gt_bitwise_or      # Katta (>)
+    | notin_bitwise_or   # Ichida emas (not in)
+    | in_bitwise_or      # Ichida (in)
+    | isnot_bitwise_or   # Bu emas (is not)
+    | is_bitwise_or      # Bu / Dir (is)
+
 
 eq_bitwise_or[CmpopExprPair*]: '==' a=bitwise_or { _PyPegen_cmpop_expr_pair(p, Eq, a) }
+
 noteq_bitwise_or[CmpopExprPair*]:
     | (tok='!=' { _PyPegen_check_barry_as_flufl(p, tok) ? NULL : tok}) a=bitwise_or {_PyPegen_cmpop_expr_pair(p, NotEq, a) }
+
 lte_bitwise_or[CmpopExprPair*]: '<=' a=bitwise_or { _PyPegen_cmpop_expr_pair(p, LtE, a) }
 lt_bitwise_or[CmpopExprPair*]: '<' a=bitwise_or { _PyPegen_cmpop_expr_pair(p, Lt, a) }
 gte_bitwise_or[CmpopExprPair*]: '>=' a=bitwise_or { _PyPegen_cmpop_expr_pair(p, GtE, a) }
 gt_bitwise_or[CmpopExprPair*]: '>' a=bitwise_or { _PyPegen_cmpop_expr_pair(p, Gt, a) }
-notin_bitwise_or[CmpopExprPair*]: 'not' 'in' a=bitwise_or { _PyPegen_cmpop_expr_pair(p, NotIn, a) }
-in_bitwise_or[CmpopExprPair*]: 'in' a=bitwise_or { _PyPegen_cmpop_expr_pair(p, In, a) }
-isnot_bitwise_or[CmpopExprPair*]: 'is' 'not' a=bitwise_or { _PyPegen_cmpop_expr_pair(p, IsNot, a) }
-is_bitwise_or[CmpopExprPair*]: 'is' a=bitwise_or { _PyPegen_cmpop_expr_pair(p, Is, a) }
+
+notin_bitwise_or[CmpopExprPair*]: 
+    | ( 'not' | 'emas' | 'не' | '不' | '아니' | 'नहीं' | 'لا' ) 
+      ( 'in' | 'ichida' | 'в' | '在' | 'में' | 'في' ) 
+      a=bitwise_or { _PyPegen_cmpop_expr_pair(p, NotIn, a) }
+
+in_bitwise_or[CmpopExprPair*]: 
+    | ( 'in' | 'ichida' | 'в' | '突破' | '在' | 'में' | 'في' ) 
+      a=bitwise_or { _PyPegen_cmpop_expr_pair(p, In, a) }
+
+isnot_bitwise_or[CmpopExprPair*]: 
+    | ( 'is' | 'dir' | 'bu' | 'есть' | '是' | 'है' | 'هو' ) 
+      ( 'not' | 'emas' | 'не' | '不' | '아니' | 'नहीं' | 'لا' ) 
+      a=bitwise_or { _PyPegen_cmpop_expr_pair(p, IsNot, a) }
+
+is_bitwise_or[CmpopExprPair*]: 
+    | ( 'is' | 'dir' | 'bu' | 'есть' | '是' | 'है' | 'هو' ) 
+      a=bitwise_or { _PyPegen_cmpop_expr_pair(p, Is, a) }
 
 # Bitwise operators
 # -----------------
@@ -863,8 +935,10 @@ power[expr_ty]:
 # Primary elements are things like "obj.something.something", "obj[something]", "obj(something)", "obj" ...
 
 await_primary[expr_ty] (memo):
-    | 'await' a=primary { CHECK_VERSION(expr_ty, 5, "Await expressions are", _PyAST_Await(a, EXTRA)) }
+    | ( 'await' | 'kutish' | 'ожидать' | '等待' | 'انتظار' | 'प्रतीक्षा' ) 
+      a=primary { CHECK_VERSION(expr_ty, 5, "Await expressions are", _PyAST_Await(a, EXTRA)) }
     | primary
+
 
 primary[expr_ty]:
     | a=primary '.' b=NAME { _PyAST_Attribute(a, b->v.Name.id, Load, EXTRA) }
@@ -886,15 +960,18 @@ slice[expr_ty]:
     | a=named_expression { a }
 
 atom[expr_ty]:
-    | NAME
-    | 'True' { _PyAST_Constant(Py_True, NULL, EXTRA) }
-    | 'False' { _PyAST_Constant(Py_False, NULL, EXTRA) }
-    | 'None' { _PyAST_Constant(Py_None, NULL, EXTRA) }
+    | NAME                                     # O'zgaruvchilar (ism, x, y, ...)
+    | ( 'True' | 'Rost' | 'Истина' | '真' | 'सही' | 'صحيح' ) 
+      { _PyAST_Constant(Py_True, NULL, EXTRA) }
+    | ( 'False' | 'Yolg\'on' | 'Ложь' | '假' | 'गलत' | 'خطأ' ) 
+      { _PyAST_Constant(Py_False, NULL, EXTRA) }
+    | ( 'None' | 'Hech_nima' | 'Пусто' | '空' | 'शून्य' | 'عدم' ) 
+      { _PyAST_Constant(Py_None, NULL, EXTRA) }
     | &(STRING|FSTRING_START|TSTRING_START) strings
-    | NUMBER
-    | &'(' (genexp | tuple | group)
-    | &'[' (listcomp | list)
-    | &'{' (dictcomp | setcomp | dict | set)
+    | NUMBER                                   # Sonlar (1, 3.14, 42)
+    | &'(' (genexp | tuple | group)           # Qavslar ichidagi guruhlar
+    | &'[' (listcomp | list)                  # Ro'yxatlar
+    | &'{' (dictcomp | setcomp | dict | set)  # Lug'atlar va to'plamlar
     | '...' { _PyAST_Constant(Py_Ellipsis, NULL, EXTRA) }
 
 group[expr_ty]:
@@ -905,7 +982,8 @@ group[expr_ty]:
 # ----------------
 
 lambdef[expr_ty]:
-    | 'lambda' a=[lambda_params] ':' b=expression {
+    | ( 'lambda' | 'f-iya' | 'лямбда' | 'λ' | '函数' | 'دالة' ) 
+      a=[lambda_params] ':' b=expression {
         _PyAST_Lambda((a) ? a : CHECK(arguments_ty, _PyPegen_empty_arguments(p)), b, EXTRA) }
 
 lambda_params[arguments_ty]:
@@ -1242,35 +1320,51 @@ invalid_legacy_expression:
         _PyPegen_check_legacy_stmt(p, a) ? RAISE_SYNTAX_ERROR_KNOWN_RANGE(a, b,
             "Missing parentheses in call to '%U'. Did you mean %U(...)?", a->v.Name.id, a->v.Name.id) : NULL}
 
+// Turon Parser Engine uchun ko'p tilli qoida
 invalid_type_param:
     | '*' a=NAME colon=':' e=expression {
+            // e->kind == Tuple_kind bo'lsa cheklov (constraints), aks holda bog'lama (bound) xatosini chiqaradi
+            const char* xato_kodi = (e->kind == Tuple_kind) ? "ERR_TYPEVAR_CONSTRAINT" : "ERR_TYPEVAR_BOUND";
+            
+            // Tizim foydalanuvchi tanlagan tilga qarab xabarni avtomatik tanlaydi
+            RAISE_SYNTAX_ERROR_STARTING_FROM(colon, GET_LOCAL_IZED_MSG(p->user_lang, xato_kodi))
+        }
+
+    invalid_type_param:
+    | '*' a=NAME colon=':' e=expression {
             RAISE_SYNTAX_ERROR_STARTING_FROM(colon, e->kind == Tuple_kind
-                ? "cannot use constraints with TypeVarTuple"
-                : "cannot use bound with TypeVarTuple")
+                ? "TypeVarTuple bilan cheklovlardan foydalanib bo'lmaydi"
+                : "TypeVarTuple bilan bog'lamalardan (bound) foydalanib bo'lmaydi")
         }
     | '**' a=NAME colon=':' e=expression {
             RAISE_SYNTAX_ERROR_STARTING_FROM(colon, e->kind == Tuple_kind
-                ? "cannot use constraints with ParamSpec"
-                : "cannot use bound with ParamSpec")
+                ? "ParamSpec bilan cheklovlardan foydalanib bo'lmaydi"
+                : "ParamSpec bilan bog'lamalardan (bound) foydalanib bo'lmaydi")
         }
 
+
+
 invalid_expression:
+   # Satrlar ichidagi xatolar uchun
    |  STRING a=(!STRING expression_without_invalid)+ STRING {
         RAISE_SYNTAX_ERROR_KNOWN_RANGE( PyPegen_first_item(a, expr_ty), PyPegen_last_item(a, expr_ty),
-        "invalid syntax. Is this intended to be part of the string?") }
-    # !(NAME STRING) is not matched so we don't show this error with some invalid string prefixes like: kf"dsfsdf"
-    # Soft keywords need to also be ignored because they can be parsed as NAME NAME
+        GET_LOCAL_IZED_MSG(p->user_lang, "ERR_STRING_PART_INTENDED")) }
+
+   # Vergul tushib qolganda
    | !(NAME STRING | SOFT_KEYWORD) a=disjunction b=expression_without_invalid {
         _PyPegen_raise_error_for_missing_comma(p, a, b) }
-   | a=disjunction 'if' b=disjunction !('else'|':') { RAISE_SYNTAX_ERROR_KNOWN_RANGE(a, b, "expected 'else' after 'if' expression") }
+
+   # 'agar' (if) boru, 'aks holda' (else) yo'q bo'lsa
+   | a=disjunction 'if' b=disjunction !('else'|':') { 
+        RAISE_SYNTAX_ERROR_KNOWN_RANGE(a, b, GET_LOCAL_IZED_MSG(p->user_lang, "ERR_EXPECTED_ELSE")) }
+
+   # 'aks holda' (else) dan keyin ifoda bo'lmasa
    | a=disjunction 'if' b=disjunction 'else' !expression {
-        RAISE_SYNTAX_ERROR_ON_NEXT_TOKEN("expected expression after 'else', but statement is given") }
-   | a[stmt_ty]=(pass_stmt|break_stmt|continue_stmt) 'if' b=disjunction 'else' c=simple_stmt {
-        RAISE_SYNTAX_ERROR_KNOWN_LOCATION (a, "expected expression before 'if', but statement is given") }
+        RAISE_SYNTAX_ERROR_ON_NEXT_TOKEN(GET_LOCAL_IZED_MSG(p->user_lang, "ERR_EXPECTED_EXPR_AFTER_ELSE")) }
+
+   # Lambda ifodalari qavssiz bo'lsa
    | a='lambda' [lambda_params] b=':' &FSTRING_MIDDLE  {
-        RAISE_SYNTAX_ERROR_KNOWN_RANGE(a, b, "f-string: lambda expressions are not allowed without parentheses") }
-   | a='lambda' [lambda_params] b=':' &TSTRING_MIDDLE  {
-        RAISE_SYNTAX_ERROR_KNOWN_RANGE(a, b, "t-string: lambda expressions are not allowed without parentheses") }
+        RAISE_SYNTAX_ERROR_KNOWN_RANGE(a, b, GET_LOCAL_IZED_MSG(p->user_lang, "ERR_LAMBDA_PARENTHESES")) }
 
 invalid_if_expression:
    | disjunction 'if' b=disjunction 'else' a='*' {
@@ -1278,329 +1372,472 @@ invalid_if_expression:
    | disjunction 'if' b=disjunction 'else' a='**' {
         RAISE_SYNTAX_ERROR_KNOWN_LOCATION(a, "cannot use dict unpacking on only part of a conditional expression") }
 
-invalid_named_expression(memo):
-    | a=expression ':=' expression {
-        RAISE_SYNTAX_ERROR_KNOWN_LOCATION(
-            a, "cannot use assignment expressions with %s", _PyPegen_get_expr_name(a)) }
-    | a=NAME '=' b=bitwise_or !('='|':=') {
-        RAISE_SYNTAX_ERROR_KNOWN_RANGE(a, b, "invalid syntax. Maybe you meant '==' or ':=' instead of '='?") }
-    | !(list|tuple|genexp|'True'|'None'|'False') a=bitwise_or b='=' bitwise_or !('='|':=') {
-        RAISE_SYNTAX_ERROR_KNOWN_LOCATION(a, "cannot assign to %s here. Maybe you meant '==' instead of '='?",
-                                          _PyPegen_get_expr_name(a)) }
+invalid_if_expression:
+   # Ro'yxatni (list) noto'g'ri yoyish xatosi
+   | disjunction 'if' b=disjunction 'else' a='*' {
+        RAISE_SYNTAX_ERROR_KNOWN_LOCATION(a, GET_LOCAL_IZED_MSG(p->user_lang, "ERR_UNPACK_CONDITIONAL_PART")) }
+
+   # Lug'atni (dict) noto'g'ri yoyish xatosi
+   | disjunction 'if' b=disjunction 'else' a='**' {
+        RAISE_SYNTAX_ERROR_KNOWN_LOCATION(a, GET_LOCAL_IZED_MSG(p->user_lang, "ERR_DICT_UNPACK_CONDITIONAL_PART")) }
 
 invalid_assignment:
     | a=invalid_ann_assign_target ':' expression {
         RAISE_SYNTAX_ERROR_KNOWN_LOCATION(
             a,
-            "only single target (not %s) can be annotated",
-            _PyPegen_get_expr_name(a)
-        )}
-    | a=star_named_expression ',' star_named_expressions* ':' expression {
-        RAISE_SYNTAX_ERROR_KNOWN_LOCATION(a, "only single target (not tuple) can be annotated") }
+            GET_LOCAL_IZED_MSG(p->user_lang, "ERR_SINGLE_TARGET_ANNOTATION"),
+            _PyPegen_get_expr_name(a))
+    }
+
+            | a=star_named_expression ',' star_named_expressions* ':' expression {
+        RAISE_SYNTAX_ERROR_KNOWN_LOCATION(a, GET_LOCAL_IZED_MSG(p->user_lang, "ERR_ONLY_SINGLE_TARGET_ANNOTATION")) }
     | a=expression ':' expression {
-        RAISE_SYNTAX_ERROR_KNOWN_LOCATION(a, "illegal target for annotation") }
+        RAISE_SYNTAX_ERROR_KNOWN_LOCATION(a, GET_LOCAL_IZED_MSG(p->user_lang, "ERR_ILLEGAL_ANNOTATION_TARGET")) }
     | (star_targets '=')* a=star_expressions '=' {
         RAISE_SYNTAX_ERROR_INVALID_TARGET(STAR_TARGETS, a) }
-    | (star_targets '=')* a=yield_expr '=' { RAISE_SYNTAX_ERROR_KNOWN_LOCATION(a, "assignment to yield expression not possible") }
+    | (star_targets '=')* a=yield_expr '=' { 
+        RAISE_SYNTAX_ERROR_KNOWN_LOCATION(a, GET_LOCAL_IZED_MSG(p->user_lang, "ERR_ASSIGN_YIELD_IMPOSSIBLE")) }
     | a=star_expressions augassign annotated_rhs {
         RAISE_SYNTAX_ERROR_KNOWN_LOCATION(
             a,
-            "'%s' is an illegal expression for augmented assignment",
-            _PyPegen_get_expr_name(a)
+            GET_LOCAL_IZED_MSG(p->user_lang, "ERR_ILLEGAL_AUGASSIGN_EXPR"),
+            _PyPegen_get_expr_name(a)) }
+
         )}
 invalid_ann_assign_target[expr_ty]:
-    | list
-    | tuple
-    | '(' a=invalid_ann_assign_target ')' { a }
+    | list                                     # Ro'yxat (masalan: [a, b]: int) - XATO
+    | tuple                                    # To'plam (masalan: a, b: int) - XATO
+    | '(' a=invalid_ann_assign_target ')' { a } # Qavs ichidagi noto'g'ri nishonlar
+
 invalid_raise_stmt:
     | a='raise' b='from' {
-        RAISE_SYNTAX_ERROR_KNOWN_RANGE(a, b, "did you forget an expression between 'raise' and 'from'?") }
+        RAISE_SYNTAX_ERROR_KNOWN_RANGE(a, b, GET_LOCAL_IZED_MSG(p->user_lang, "ERR_RAISE_FROM_MISSING_EXPR")) }
     | 'raise' expression a='from' {
-        RAISE_SYNTAX_ERROR_KNOWN_LOCATION(a, "did you forget an expression after 'from'?") }
-invalid_del_stmt:
-    | 'del' a=star_expressions {
+        RAISE_SYNTAX_ERROR_KNOWN_LOCATION(a, GET_LOCAL_IZED_MSG(p->user_lang, "ERR_FROM_MISSING_EXPR")) }
+
+        | 'del' a=star_expressions {
         RAISE_SYNTAX_ERROR_INVALID_TARGET(DEL_TARGETS, a) }
+
 invalid_assert_stmt:
     | 'assert' a=expression '=' b=expression {
         RAISE_SYNTAX_ERROR_KNOWN_RANGE(
-            a, b,
-            "cannot assign to %s here. Maybe you meant '==' instead of '='?",
-            _PyPegen_get_expr_name(a)) }
+            a, b, 
+            GET_LOCAL_IZED_MSG(p->user_lang, "ERR_ASSERT_ASSIGNMENT")
+        )
+    }
+
+                | 'assert' a=expression '=' b=expression {
+        RAISE_SYNTAX_ERROR_KNOWN_RANGE(
+            a, b, 
+            GET_LOCAL_IZED_MSG(p->user_lang, "ERR_ASSERT_ASSIGNMENT"),
+            _PyPegen_get_expr_name(a)) 
+    }
     | 'assert' expression ',' a=expression '=' b=expression {
         RAISE_SYNTAX_ERROR_KNOWN_RANGE(
             a, b,
-            "cannot assign to %s here. Maybe you meant '==' instead of '='?",
-            _PyPegen_get_expr_name(a)) }
-    | 'assert' a=expression ':=' b=expression {
+            GET_LOCAL_IZED_MSG(p->user_lang, "ERR_ASSERT_MSG_ASSIGNMENT"),
+            _PyPegen_get_expr_name(a))
+    }
+
+                | 'assert' a=expression ':=' b=expression {
         RAISE_SYNTAX_ERROR_KNOWN_RANGE(
             a, b,
-            "cannot use named expression without parentheses here") }
+            GET_LOCAL_IZED_MSG(p->user_lang, "ERR_ASSERT_WALRUS_NO_PARENS"))
+    }
     | 'assert' expression ',' a=expression ':=' b=expression {
         RAISE_SYNTAX_ERROR_KNOWN_RANGE(
             a, b,
-            "cannot use named expression without parentheses here") }
-invalid_block:
-    | NEWLINE !INDENT { RAISE_INDENTATION_ERROR("expected an indented block") }
+            GET_LOCAL_IZED_MSG(p->user_lang, "ERR_ASSERT_WALRUS_NO_PARENS"))
+    }
+
 invalid_comprehension:
     | '[' a='**' b=expression for_if_clauses {
-        RAISE_SYNTAX_ERROR_KNOWN_RANGE(a, b, "cannot use dict unpacking in list comprehension") }
+        RAISE_SYNTAX_ERROR_KNOWN_RANGE(a, b, 
+        "List comprehension ichida lug'at yoyish (**) mumkin emas / 列表推导中不能使用字典解包") }
+    
     | '(' a='**' b=expression for_if_clauses {
-        RAISE_SYNTAX_ERROR_KNOWN_RANGE(a, b, "cannot use dict unpacking in generator expression") }
+        RAISE_SYNTAX_ERROR_KNOWN_RANGE(a, b, 
+        "Generator ifodasida lug'at yoyish (**) mumkin emas / 生成器表达式中不能使用字典解包") }
+    
     | ('[' | '{') a=star_named_expression ',' b=star_named_expressions for_if_clauses {
         RAISE_SYNTAX_ERROR_KNOWN_RANGE(a, PyPegen_last_item(b, expr_ty),
-        "did you forget parentheses around the comprehension target?") }
+        "Comprehension nishoni atrofida qavslarni unutdingizmi? / 是否忘记在推导目标周围加上括号？") }
+    
     | ('[' | '{') a=star_named_expression b=',' for_if_clauses {
-        RAISE_SYNTAX_ERROR_KNOWN_RANGE(a, b, "did you forget parentheses around the comprehension target?") }
-invalid_parameters:
+        RAISE_SYNTAX_ERROR_KNOWN_RANGE(a, b, 
+        "Comprehension nishoni atrofida qavslarni unutdingizmi? / 是否忘记在推导目标周围加上括号？") }
+
     | a="/" ',' {
-        RAISE_SYNTAX_ERROR_KNOWN_LOCATION(a, "at least one parameter must precede /") }
+        RAISE_SYNTAX_ERROR_KNOWN_LOCATION(a, 
+        "Kamida bitta parametr '/' dan oldin kelishi kerak / 至少有一个参数必须在 '/' 之前") }
+    
     | (slash_no_default | slash_with_default) param_maybe_default* a='/' {
-        RAISE_SYNTAX_ERROR_KNOWN_LOCATION(a, "/ may appear only once") }
+        RAISE_SYNTAX_ERROR_KNOWN_LOCATION(a, 
+        "'/' belgisi faqat bir marta ishlatilishi mumkin / '/' 只能出现一次") }
+    
     | slash_no_default? param_no_default* invalid_parameters_helper a=param_no_default {
-        RAISE_SYNTAX_ERROR_KNOWN_LOCATION(a, "parameter without a default follows parameter with a default") }
+        RAISE_SYNTAX_ERROR_KNOWN_LOCATION(a, 
+        "Default qiymatli parametrdan keyin oddiy parametr kelishi mumkin emas / 默认参数之后不能跟着非默认参数") }
+    
     | param_no_default* a='(' param_no_default+ ','? b=')' {
-        RAISE_SYNTAX_ERROR_KNOWN_RANGE(a, b, "Function parameters cannot be parenthesized") }
+        RAISE_SYNTAX_ERROR_KNOWN_RANGE(a, b, 
+        "Funksiya parametrlarini qavs ichiga olib bo'lmaydi / 函数参数不能用括号括起来") }
+    
     | (slash_no_default | slash_with_default)? param_maybe_default* '*' (',' | param_no_default) param_maybe_default* a='/' {
-        RAISE_SYNTAX_ERROR_KNOWN_LOCATION(a, "/ must be ahead of *") }
+        RAISE_SYNTAX_ERROR_KNOWN_LOCATION(a, 
+        "'/' belgisi '*' dan oldin kelishi kerak / '/' 必须在 '*' 之前") }
+    
     | param_maybe_default+ '/' a='*' {
-        RAISE_SYNTAX_ERROR_KNOWN_LOCATION(a, "expected comma between / and *") }
-invalid_default:
-    | a='=' &(')'|',') { RAISE_SYNTAX_ERROR_KNOWN_LOCATION(a, "expected default value expression") }
+        RAISE_SYNTAX_ERROR_KNOWN_LOCATION(a, 
+        "'/' va '*' orasida vergul kutilmoqda / '/' 和 '*' 之间缺少逗号") }
+
+        | a='=' &(')'|',') { 
+        RAISE_SYNTAX_ERROR_KNOWN_LOCATION(a, "Default qiymat ifodasi kutilmoqda / 预期默认值表达式 / अपेक्षित डिफ़ॉल्ट मान अभिव्यक्ति") }
+
 invalid_star_etc:
-    | a='*' (')' | ',' (')' | '**')) { RAISE_SYNTAX_ERROR_KNOWN_LOCATION(a, "named parameters must follow bare *") }
-    | '*' ',' TYPE_COMMENT { RAISE_SYNTAX_ERROR("bare * has associated type comment") }
-    | '*' param a='=' { RAISE_SYNTAX_ERROR_KNOWN_LOCATION(a, "var-positional parameter cannot have default value") }
+    | a='*' (')' | ',' (')' | '**')) { 
+        RAISE_SYNTAX_ERROR_KNOWN_LOCATION(a, "Nomlangan parametrlar '*' dan keyin kelishi kerak / 命名参数必须跟在 '*' 之后 / नामित पैरामीटर '*' के बाद होने चाहिए") }
+    
+    | '*' ',' TYPE_COMMENT { 
+        RAISE_SYNTAX_ERROR("Yolg'iz '*' bilan tur sharhi (type comment) ishlatib bo'lmaydi / 裸 '*' 不能有关联的类型注释") }
+    
+    | '*' param a='=' { 
+        RAISE_SYNTAX_ERROR_KNOWN_LOCATION(a, "Var-positional parametrda default qiymat bo'lishi mumkin emas / 可变位置参数不能有默认值") }
+    
     | '*' (param_no_default | ',') param_maybe_default* a='*' (param_no_default | ',') {
-        RAISE_SYNTAX_ERROR_KNOWN_LOCATION(a, "* may appear only once") }
-invalid_kwds:
-    | '**' param a='=' { RAISE_SYNTAX_ERROR_KNOWN_LOCATION(a, "var-keyword parameter cannot have default value") }
-    | '**' param ',' a=param { RAISE_SYNTAX_ERROR_KNOWN_LOCATION(a, "parameters cannot follow var-keyword parameter") }
-    | '**' param ',' a[Token*]=('*'|'**'|'/') { RAISE_SYNTAX_ERROR_KNOWN_LOCATION(a, "parameters cannot follow var-keyword parameter") }
-invalid_parameters_helper: # This is only there to avoid type errors
-    | a=slash_with_default { _PyPegen_singleton_seq(p, a) }
-    | param_with_default+
-invalid_lambda_parameters:
-    | a="/" ',' {
-        RAISE_SYNTAX_ERROR_KNOWN_LOCATION(a, "at least one parameter must precede /") }
+        RAISE_SYNTAX_ERROR_KNOWN_LOCATION(a, "'*' belgisi faqat bir marta ishlatilishi mumkin / '*' 只能出现一次 / '*' केवल एक बार दिखाई दे सकता है") }
+
+    | '**' param a='=' { 
+        RAISE_SYNTAX_ERROR_KNOWN_LOCATION(a, "Var-keyword parametrda default qiymat bo'lishi mumkin emas / 可变关键字参数不能有默认值 / वार-कीवर्ड पैरामीटर में डिफ़ॉルト मान नहीं हो सकता") }
+    
+    | '**' param ',' a=param { 
+        RAISE_SYNTAX_ERROR_KNOWN_LOCATION(a, "'**' dan keyin boshqa parametr kelishi mumkin emas / '**' 之后不能有其他参数 / '**' के बाद कोई अन्य पैरामीटर नहीं हो सकता") }
+    
+    | '**' param ',' a[Token*]=('*'|'**'|'/') { 
+        RAISE_SYNTAX_ERROR_KNOWN_LOCATION(a, "'**' dan keyin boshqa parametr kelishi mumkin emas / '**' 之后不能有其他参数") }
     | (lambda_slash_no_default | lambda_slash_with_default) lambda_param_maybe_default* a='/' {
-        RAISE_SYNTAX_ERROR_KNOWN_LOCATION(a, "/ may appear only once") }
+        RAISE_SYNTAX_ERROR_KNOWN_LOCATION(a, "Lambda parametrlarida '/' faqat bir marta ishlatilishi mumkin / lambda 参数中 '/' 只能出现一次") }
     | lambda_slash_no_default? lambda_param_no_default* invalid_lambda_parameters_helper a=lambda_param_no_default {
-        RAISE_SYNTAX_ERROR_KNOWN_LOCATION(a, "parameter without a default follows parameter with a default") }
-    | lambda_param_no_default* a='(' ','.lambda_param+ ','? b=')' {
-        RAISE_SYNTAX_ERROR_KNOWN_RANGE(a, b, "Lambda expression parameters cannot be parenthesized") }
+        RAISE_SYNTAX_ERROR_KNOWN_LOCATION(a, "Lambda: default qiymatli parametrdan keyin oddiy parametr kelishi mumkin emas / lambda: 默认参数后不能跟非默认参数") }
+    | lambda_param_no_default* a='(' lambda_param+ ','? b=')' {
+        RAISE_SYNTAX_ERROR_KNOWN_RANGE(a, b, "Lambda parametrlarini qavs ichiga olib bo'lmaydi / lambda 表达式参数不能加括号") }
     | (lambda_slash_no_default | lambda_slash_with_default)? lambda_param_maybe_default* '*' (',' | lambda_param_no_default) lambda_param_maybe_default* a='/' {
-        RAISE_SYNTAX_ERROR_KNOWN_LOCATION(a, "/ must be ahead of *") }
+        RAISE_SYNTAX_ERROR_KNOWN_LOCATION(a, "Lambda: '/' belgisi '*' dan oldin kelishi kerak / lambda: '/' 必须在 '*' 之前") }
     | lambda_param_maybe_default+ '/' a='*' {
-        RAISE_SYNTAX_ERROR_KNOWN_LOCATION(a, "expected comma between / and *") }
-invalid_lambda_parameters_helper:
-    | a=lambda_slash_with_default { _PyPegen_singleton_seq(p, a) }
-    | lambda_param_with_default+
-invalid_lambda_star_etc:
-    | '*' (':' | ',' (':' | '**')) { RAISE_SYNTAX_ERROR("named parameters must follow bare *") }
-    | '*' lambda_param a='=' { RAISE_SYNTAX_ERROR_KNOWN_LOCATION(a, "var-positional parameter cannot have default value") }
+        RAISE_SYNTAX_ERROR_KNOWN_LOCATION(a, "'/' va '*' orasida vergul kutilmoqda / '/' 和 '*' 之间缺少逗号") }
+
+        
+        | '*' (':' | ',' (':' | '**')) { 
+        RAISE_SYNTAX_ERROR("Nomlangan parametrlar '*' dan keyin kelishi shart / 命名参数必须跟在 '*' 之后 / नामित पैरामीटर '*' के बाद होने चाहिए") }
+    
+    | '*' lambda_param a='=' { 
+        RAISE_SYNTAX_ERROR_KNOWN_LOCATION(a, "Lambda: var-positional parametrda default qiymat bo'lishi mumkin emas / lambda: 可变位置参数 cannot have default value") }
+    
     | '*' (lambda_param_no_default | ',') lambda_param_maybe_default* a='*' (lambda_param_no_default | ',') {
-        RAISE_SYNTAX_ERROR_KNOWN_LOCATION(a, "* may appear only once") }
+        RAISE_SYNTAX_ERROR_KNOWN_LOCATION(a, "Lambda: '*' belgisi faqat bir marta ishlatilishi mumkin / lambda: '*' 只能出现一次") }
+
 invalid_lambda_kwds:
-    | '**' lambda_param a='=' { RAISE_SYNTAX_ERROR_KNOWN_LOCATION(a, "var-keyword parameter cannot have default value") }
-    | '**' lambda_param ',' a=lambda_param { RAISE_SYNTAX_ERROR_KNOWN_LOCATION(a, "parameters cannot follow var-keyword parameter") }
-    | '**' lambda_param ',' a[Token*]=('*'|'**'|'/') { RAISE_SYNTAX_ERROR_KNOWN_LOCATION(a, "parameters cannot follow var-keyword parameter") }
-invalid_double_type_comments:
-    | TYPE_COMMENT NEWLINE TYPE_COMMENT NEWLINE INDENT {
-        RAISE_SYNTAX_ERROR("Cannot have two type comments on def") }
-invalid_with_item:
-    | expression 'as' a=expression &(',' | ')' | ':') {
-        RAISE_SYNTAX_ERROR_INVALID_TARGET(STAR_TARGETS, a) }
+    | '**' lambda_param a='=' { 
+        RAISE_SYNTAX_ERROR_KNOWN_LOCATION(a, "Lambda: var-keyword parametrda default qiymat bo'lishi mumkin emas / lambda: 可变关键字参数 cannot have default value") }
+    
+    | '**' lambda_param ',' a=lambda_param { 
+        RAISE_SYNTAX_ERROR_KNOWN_LOCATION(a, "Lambda: '**' dan keyin boshqa parametr kelishi mumkin emas / lambda: '**' 之后不能有其他参数") }
+    
+    | '**' lambda_param ',' a[Token*]=('*'|'**'|'/') { 
+        RAISE_SYNTAX_ERROR_KNOWN_LOCATION(a, "Lambda: '**' dan keyin operatorlar kelishi mumkin emas / lambda: '**' 之后不能有运算符") }
+
+        | TYPE_COMMENT NEWLINE TYPE_COMMENT NEWLINE INDENT {
+        RAISE_SYNTAX_ERROR("Bitta 'def' uchun ikkita tur sharhi ishlatish mumkin emas / 一个 'def' 不能有两个类型注释 / एक 'def' पर दो प्रकार की टिप्पणियाँ नहीं हो सकतीं") }
 
 invalid_for_if_clause:
     | 'async'? 'for' (bitwise_or (',' bitwise_or)* [',']) !'in' {
-        RAISE_SYNTAX_ERROR("'in' expected after for-loop variables") }
+        RAISE_SYNTAX_ERROR(
+            "for-sikl o'zgaruvchilaridan keyin 'in' kutilmoqda / "
+            "for 循环变量后缺少 'in' / "
+            "for-loop चर के बाद 'in' की अपेक्षा है"
+        ) 
+    }
 
 invalid_for_target:
     | 'async'? 'for' a=star_expressions {
-        RAISE_SYNTAX_ERROR_INVALID_TARGET(FOR_TARGETS, a) }
+        # Bu funksiya avtomatik ravishda xato turini aniqlaydi. 
+        # Agar biz unga qo'shimcha tushuntirish bermoqchi bo'lsak:
+        RAISE_SYNTAX_ERROR_INVALID_TARGET(FOR_TARGETS, a) 
+        # "for-siklida noto'g'ri o'zgaruvchi nishoni / for 循环中的目标无效 / for-loop में अमान्य लक्ष्य"
+    }
 
 invalid_group:
     | '(' a=starred_expression ')' {
-        RAISE_SYNTAX_ERROR_KNOWN_LOCATION(a, "cannot use starred expression here") }
+        RAISE_SYNTAX_ERROR_KNOWN_LOCATION(a, 
+            "Bu yerda yulduzchali (*) ifodadan foydalanib bo'lmaydi / 此处不能使用星号表达式 / यहाँ तारांकित अभिव्यक्ति का उपयोग नहीं कर सकते") }
     | '(' a='**' expression ')' {
-        RAISE_SYNTAX_ERROR_KNOWN_LOCATION(a, "cannot use double starred expression here") }
-invalid_import:
-    | a='import' ','.dotted_name+ 'from' dotted_name {
-        RAISE_SYNTAX_ERROR_STARTING_FROM(a, "Did you mean to use 'from ... import ...' instead?") }
-    | 'import' token=NEWLINE {
-        RAISE_SYNTAX_ERROR_STARTING_FROM(token, "Expected one or more names after 'import'") }
-invalid_dotted_as_name:
-    | dotted_name 'as' !(NAME (',' | ')' | ';' | NEWLINE)) a=expression {
-        RAISE_SYNTAX_ERROR_KNOWN_LOCATION(a,
-            "cannot use %s as import target", _PyPegen_get_expr_name(a)) }
-invalid_import_from_as_name:
-    | NAME 'as' !(NAME (',' | ')' | ';' | NEWLINE)) a=expression {
-        RAISE_SYNTAX_ERROR_KNOWN_LOCATION(a,
-            "cannot use %s as import target", _PyPegen_get_expr_name(a)) }
+        RAISE_SYNTAX_ERROR_KNOWN_LOCATION(a, 
+            "Bu yerda qo'sh yulduzchali (**) ifodadan foydalanib bo'lmaydi / 此处不能使用双星号表达式") }
+invalid_group:
+    | '(' a=starred_expression ')' {
+        RAISE_SYNTAX_ERROR_KNOWN_LOCATION(a, 
+            "Bu yerda yulduzchali (*) ifodadan foydalanib bo'lmaydi / 此处不能使用星号表达式 / यहाँ तारांकित अभिव्यक्ति का उपयोग नहीं कर सकते") }
+    | '(' a='**' expression ')' {
+        RAISE_SYNTAX_ERROR_KNOWN_LOCATION(a, 
+            "Bu yerda qo'sh yulduzchali (**) ifodadan foydalanib bo'lmaydi / 此处不能使用双星号表达式") }
 
 invalid_import_from_targets:
     | import_from_as_names ',' NEWLINE {
-        RAISE_SYNTAX_ERROR("trailing comma not allowed without surrounding parentheses") }
+        RAISE_SYNTAX_ERROR(
+            "Qavslarsiz oxirgi verguldan foydalanish mumkin emas / "
+            "未加括号时不允许使用尾随逗号 / "
+            "बिना कोष्ठक के अंतिम अल्पविराम की अनुमति नहीं है"
+        ) 
+    }
     | token=NEWLINE {
-        RAISE_SYNTAX_ERROR_STARTING_FROM(token, "Expected one or more names after 'import'") }
+        RAISE_SYNTAX_ERROR_STARTING_FROM(token, 
+            "'import'dan keyin kamida bitta nom kutilmoqda / 'import' 后预期有一个或多个名称") 
+    }
 
 invalid_with_stmt:
     | ['async'] 'with' ','.(expression ['as' star_target])+ trailing=',' ':' {
-        RAISE_SYNTAX_ERROR_KNOWN_LOCATION(trailing, "the last 'with' item has a trailing comma") }
-    | ['async'] 'with' ','.(expression ['as' star_target])+ NEWLINE { RAISE_SYNTAX_ERROR("expected ':'") }
-    | ['async'] 'with' '(' ','.(expressions ['as' star_target])+ ','? ')' NEWLINE { RAISE_SYNTAX_ERROR("expected ':'") }
-invalid_with_stmt_indent:
-    | ['async'] a='with' ','.(expression ['as' star_target])+ ':' NEWLINE !INDENT {
-        RAISE_INDENTATION_ERROR("expected an indented block after 'with' statement on line %d", a->lineno) }
-    | ['async'] a='with' '(' ','.(expressions ['as' star_target])+ ','? ')' ':' NEWLINE !INDENT {
-        RAISE_INDENTATION_ERROR("expected an indented block after 'with' statement on line %d", a->lineno) }
+        RAISE_SYNTAX_ERROR_KNOWN_LOCATION(trailing, 
+            "Oxirgi 'with' elementidan keyin ortiqcha vergul bor / 最后一个 'with' 项后面有尾随逗号") }
+    | ['async'] 'with' ','.(expression ['as' star_target])+ NEWLINE { 
+        RAISE_SYNTAX_ERROR("Ikki nuqta (:) kutilmoqda / 缺少冒号 (:) / कोलन (:) अपेक्षित है") }
+    | ['async'] 'with' '(' ','.(expressions ['as' star_target])+ ','? ')' NEWLINE { 
+        RAISE_SYNTAX_ERROR("Ikki nuqta (:) kutilmoqda / 缺少冒号 (:) / कोलन (:) अपेक्षित है") }
 
-invalid_try_stmt:
     | a='try' ':' NEWLINE !INDENT {
-        RAISE_INDENTATION_ERROR("expected an indented block after 'try' statement on line %d", a->lineno) }
-    | 'try' ':' block !('except' | 'finally') { RAISE_SYNTAX_ERROR("expected 'except' or 'finally' block") }
+        RAISE_INDENTATION_ERROR(
+            "%d-qatordagi 'try' operatoridan keyin surilgan blok (indent) kutilmoqda / "
+            "'try' 语句后的第 %d 行需要缩进块", a->lineno) }
+    
+    | 'try' ':' block !('except' | 'finally') { 
+        RAISE_SYNTAX_ERROR(
+            "'try' blokidan keyin 'except' yoki 'finally' bo'lishi shart / "
+            "'try' 块后预期有 'except' 或 'finally'") }
+    
     | 'try' ':' block* except_block+ a='except' b='*' expression ['as' NAME] ':' {
-        RAISE_SYNTAX_ERROR_KNOWN_RANGE(a, b, "cannot have both 'except' and 'except*' on the same 'try'") }
+        RAISE_SYNTAX_ERROR_KNOWN_RANGE(a, b, 
+            "Bitta 'try' ichida 'except' va 'except*'ni aralashtirib bo'lmaydi / "
+            "不能在同一个 'try' 中同时使用 'except' 和 'except*'") }
+    
     | 'try' ':' block* except_star_block+ a='except' [expression ['as' NAME]] ':' {
-        RAISE_SYNTAX_ERROR_KNOWN_LOCATION(a, "cannot have both 'except' and 'except*' on the same 'try'") }
-invalid_except_stmt:
-    | 'except' a=expression ',' expressions 'as' NAME  ':' {
-        RAISE_SYNTAX_ERROR_STARTING_FROM(a, "multiple exception types must be parenthesized when using 'as'") }
-    | a='except' expression ['as' NAME ] NEWLINE { RAISE_SYNTAX_ERROR("expected ':'") }
-    | a='except' NEWLINE { RAISE_SYNTAX_ERROR("expected ':'") }
-    | 'except' expression 'as' a=expression ':' block {
-        RAISE_SYNTAX_ERROR_KNOWN_LOCATION(
-            a, "cannot use except statement with %s", _PyPegen_get_expr_name(a)) }
+        RAISE_SYNTAX_ERROR_KNOWN_LOCATION(a, 
+            "Bitta 'try' ichida 'except' va 'except*'ni aralashtirib bo'lmaydi / "
+            "不能在同一个 'try' 中同时使用 'except' 和 'except*'") }
+
 invalid_except_star_stmt:
     | 'except' '*' a=expression ',' expressions 'as' NAME  ':' {
-        RAISE_SYNTAX_ERROR_STARTING_FROM(a, "multiple exception types must be parenthesized when using 'as'") }
-    | a='except' '*' expression ['as' NAME ] NEWLINE { RAISE_SYNTAX_ERROR("expected ':'") }
-    | a='except' '*' (NEWLINE | ':') { RAISE_SYNTAX_ERROR("expected one or more exception types") }
+        RAISE_SYNTAX_ERROR_STARTING_FROM(a, 
+            "'as' ishlatilganda bir nechta xato turlari qavs ichida bo'lishi shart / "
+            "使用 'as' 时，多个异常类型 must be parenthesized") }
+    
+    | a='except' '*' expression ['as' NAME ] NEWLINE { 
+        RAISE_SYNTAX_ERROR("Ikki nuqta (:) kutilmoqda / 缺少冒号 (:) / कोलन (:) अपेक्षित है") }
+    
+    | a='except' '*' (NEWLINE | ':') { 
+        RAISE_SYNTAX_ERROR("Kamida bitta xato turi ko'rsatilishi kerak / 预期有一个或多个异常类型") }
+    
     | 'except' '*' expression 'as' a=expression ':' block {
         RAISE_SYNTAX_ERROR_KNOWN_LOCATION(
-            a, "cannot use except* statement with %s", _PyPegen_get_expr_name(a)) }
-invalid_finally_stmt:
-    | a='finally' ':' NEWLINE !INDENT {
-        RAISE_INDENTATION_ERROR("expected an indented block after 'finally' statement on line %d", a->lineno) }
+            a, "except* operatorida %s dan foydalanib bo'lmaydi / 不能在 except* 语句中使用 %s", _PyPegen_get_expr_name(a)) }
 invalid_except_stmt_indent:
     | a='except' expression ['as' NAME ] ':' NEWLINE !INDENT {
-        RAISE_INDENTATION_ERROR("expected an indented block after 'except' statement on line %d", a->lineno) }
-    | a='except' ':' NEWLINE !INDENT { RAISE_INDENTATION_ERROR("expected an indented block after 'except' statement on line %d", a->lineno) }
+        RAISE_INDENTATION_ERROR(
+            "%d-qatordagi 'except' operatoridan keyin surilgan blok (indent) kutilmoqda / "
+            "'except' 语句后的第 %d 行需要缩进块", a->lineno) }
+    | a='except' ':' NEWLINE !INDENT { 
+        RAISE_INDENTATION_ERROR(
+            "%d-qatordagi 'except' operatoridan keyin surilgan blok (indent) kutilmoqda / "
+            "'except' 语句后的第 %d 行需要缩进块", a->lineno) }
+
 invalid_except_star_stmt_indent:
     | a='except' '*' expression ['as' NAME ] ':' NEWLINE !INDENT {
-        RAISE_INDENTATION_ERROR("expected an indented block after 'except*' statement on line %d", a->lineno) }
-invalid_match_stmt:
-    | "match" subject_expr NEWLINE { CHECK_VERSION(void*, 10, "Pattern matching is", RAISE_SYNTAX_ERROR("expected ':'") ) }
-    | a="match" subject=subject_expr ':' NEWLINE !INDENT {
-        RAISE_INDENTATION_ERROR("expected an indented block after 'match' statement on line %d", a->lineno) }
-    | a="case" patterns guard? b=':' block {
-        RAISE_SYNTAX_ERROR_KNOWN_RANGE(
-            a, b,
-            "case statement must be inside match statement") }
-invalid_case_block:
-    | "case" patterns guard? NEWLINE { RAISE_SYNTAX_ERROR("expected ':'") }
-    | a="case" patterns guard? ':' NEWLINE !INDENT {
-        RAISE_INDENTATION_ERROR("expected an indented block after 'case' statement on line %d", a->lineno) }
-invalid_as_pattern:
-    | or_pattern 'as' a="_" { RAISE_SYNTAX_ERROR_KNOWN_LOCATION(a, "cannot use '_' as a target") }
-    | or_pattern 'as' a=expression {
-        RAISE_SYNTAX_ERROR_KNOWN_LOCATION(
-            a, "cannot use %s as pattern target", _PyPegen_get_expr_name(a)) }
-invalid_class_pattern:
-    | name_or_attr '(' a=invalid_class_argument_pattern  { RAISE_SYNTAX_ERROR_KNOWN_RANGE(
-        PyPegen_first_item(a, pattern_ty),
-        PyPegen_last_item(a, pattern_ty),
-        "positional patterns follow keyword patterns") }
-invalid_mapping_pattern:
-    | '{' (items_pattern ',')? rest=double_star_pattern ',' items_pattern ','? '}' { RAISE_SYNTAX_ERROR_KNOWN_LOCATION(
-        rest,
-        "double star pattern must be the last (right-most) subpattern in the mapping pattern") }
-invalid_class_argument_pattern[asdl_pattern_seq*]:
-    | [positional_patterns ','] keyword_patterns ',' a=positional_patterns { a }
-invalid_if_stmt:
-    | 'if' named_expression NEWLINE { RAISE_SYNTAX_ERROR("expected ':'") }
-    | a='if' a=named_expression ':' NEWLINE !INDENT {
-        RAISE_INDENTATION_ERROR("expected an indented block after 'if' statement on line %d", a->lineno) }
-invalid_elif_stmt:
-    | 'elif' named_expression NEWLINE { RAISE_SYNTAX_ERROR("expected ':'") }
-    | a='elif' named_expression ':' NEWLINE !INDENT {
-        RAISE_INDENTATION_ERROR("expected an indented block after 'elif' statement on line %d", a->lineno) }
-invalid_else_stmt:
-    | a='else' ':' NEWLINE !INDENT {
-        RAISE_INDENTATION_ERROR("expected an indented block after 'else' statement on line %d", a->lineno) }
-    | 'else' ':' block 'elif' { RAISE_SYNTAX_ERROR("'elif' block follows an 'else' block")}
-invalid_while_stmt:
-    | 'while' named_expression NEWLINE { RAISE_SYNTAX_ERROR("expected ':'") }
-    | a='while' named_expression ':' NEWLINE !INDENT {
-        RAISE_INDENTATION_ERROR("expected an indented block after 'while' statement on line %d", a->lineno) }
-invalid_for_stmt:
-    | ['async'] 'for' star_targets 'in' star_expressions NEWLINE { RAISE_SYNTAX_ERROR("expected ':'") }
-    | ['async'] a='for' star_targets 'in' star_expressions ':' NEWLINE !INDENT {
-        RAISE_INDENTATION_ERROR("expected an indented block after 'for' statement on line %d", a->lineno) }
-invalid_def_raw:
-    | ['async'] a='def' NAME [type_params] '(' [params] ')' ['->' expression] ':' NEWLINE !INDENT {
-        RAISE_INDENTATION_ERROR("expected an indented block after function definition on line %d", a->lineno) }
-    | ['async'] 'def' NAME [type_params] &&'(' [params] ')' ['->' expression] &&':' [func_type_comment] block
-invalid_class_def_raw:
-    | 'class' NAME [type_params] ['(' [arguments] ')'] NEWLINE { RAISE_SYNTAX_ERROR("expected ':'") }
-    | a='class' NAME [type_params] ['(' [arguments] ')'] ':' NEWLINE !INDENT {
-        RAISE_INDENTATION_ERROR("expected an indented block after class definition on line %d", a->lineno) }
+        RAISE_INDENTATION_ERROR(
+            "%d-qatordagi 'except*' operatoridan keyin surilgan blok (indent) kutilmoqda / "
+            "'except*' 语句后的第 %d 行需要缩进块", a->lineno) }
 
-invalid_double_starred_kvpairs:
+invalid_match_stmt:
+    | "match" subject_expr NEWLINE { 
+        CHECK_VERSION(void*, 10, "Pattern matching is", 
+        RAISE_SYNTAX_ERROR("Ikki nuqta (:) kutilmoqda / 缺少冒号 (:) / कोलन (:) अपेक्षित है") ) }
+    
+    | a="match" subject=subject_expr ':' NEWLINE !INDENT {
+        RAISE_INDENTATION_ERROR(
+            "%d-qatordagi 'match' operatoridan keyin surilgan blok (indent) kutilmoqda / "
+            "'match' 语句后的第 %d 行需要缩进块", a->lineno) }
+    
+    | a="case" patterns guard? b=':' block {
+        RAISE_SYNTAX_ERROR_KNOWN_RANGE(a, b,
+            "'case' operatori faqat 'match' blokining ichida bo'lishi kerak / "
+            "'case' 语句必须在 'match' 语句内部 / 'case' स्टेटमेंट 'match' स्टेटमेंट के अंदर होना चाहिए") }
+
+        | "case" patterns guard? NEWLINE { 
+        RAISE_SYNTAX_ERROR("Ikki nuqta (:) kutilmoqda / 缺少冒号 (:) / कोलन (:) अपेक्षित है") }
+    
+    | a="case" patterns guard? ':' NEWLINE !INDENT {
+        RAISE_INDENTATION_ERROR(
+            "%d-qatordagi 'case' operatoridan keyin surilgan blok (indent) kutilmoqda / "
+            "'case' 语句后的第 %d 行需要缩进块", a->lineno) }
+
+invalid_as_pattern:
+    | or_pattern 'as' a="_" { 
+        RAISE_SYNTAX_ERROR_KNOWN_LOCATION(a, 
+            "'_' belgisini nishon sifatida ishlatib bo'lmaydi / 不能使用 '_' 作为目标 / '_' को लक्ष्य के रूप में उपयोग नहीं किया जा सकता") }
+    
+    | or_pattern 'as' a=expression {
+        RAISE_SYNTAX_ERROR_KNOWN_LOCATION(a, 
+            "Nishon sifatida %s dan foydalanib bo'lmaydi / 不能将 %s 用作模式目标", _PyPegen_get_expr_name(a)) }
+    | name_or_attr '(' a=invalid_class_argument_pattern  { 
+        RAISE_SYNTAX_ERROR_KNOWN_RANGE(
+            PyPegen_first_item(a, pattern_ty),
+            PyPegen_last_item(a, pattern_ty),
+            "Pozitsion andozalar kalit so'zli andozalardan keyin kela olmaydi / "
+            "位置模式不能在关键字模式之后 / "
+            "स्थितीय पैटर्न कीवर्ड पैटर्न के बाद नहीं आ सकते") }
+    | '{' (items_pattern ',')? rest=double_star_pattern ',' items_pattern ','? '}' { 
+        RAISE_SYNTAX_ERROR_KNOWN_LOCATION(rest,
+            "Qo'sh yulduzcha (**) lug'at andozasining eng oxirida bo'lishi shart / "
+            "双星号模式必须是映射模式deng oxirgi subpattern / "
+            "डबल स्टार पैटर्न मैपिंग पैटर्न में अंतिम होना चाहिए") }
+    | 'if' named_expression NEWLINE { 
+        RAISE_SYNTAX_ERROR("Ikki nuqta (:) kutilmoqda / 缺少冒号 (:) / कोलन (:) अपेक्षित है") }
+    | a='if' named_expression ':' NEWLINE !INDENT {
+        RAISE_INDENTATION_ERROR(
+            "%d-qatordagi 'if' operatoridan keyin surilgan blok (indent) kutilmoqda / "
+            "'if' 语句后的第 %d 行需要缩进块", a->lineno) }
+
+invalid_elif_stmt:
+    | 'elif' named_expression NEWLINE { 
+        RAISE_SYNTAX_ERROR("Ikki nuqta (:) kutilmoqda / 缺少冒号 (:) / कोलन (:) अपेक्षित है") }
+    | a='elif' named_expression ':' NEWLINE !INDENT {
+        RAISE_INDENTATION_ERROR(
+            "%d-qatordagi 'elif' operatoridan keyin surilgan blok (indent) kutilmoqda / "
+            "'elif' 语句后的第 %d 行需要缩进块", a->lineno) }
+    | a='else' ':' NEWLINE !INDENT {
+        RAISE_INDENTATION_ERROR(
+            "%d-qatordagi 'else' operatoridan keyin surilgan blok (indent) kutilmoqda / "
+            "'else' 语句后的第 %d 行需要缩进块", a->lineno) }
+    
+    | 'else' ':' block 'elif' { 
+        RAISE_SYNTAX_ERROR(
+            "'elif' bloki 'else' blokidan keyin kela olmaydi / 'elif' 块不能跟在 'else' 块之后 / 'elif' ब्लॉक 'else' ब्लॉक के बाद नहीं आ सकता") }
+
+        | 'while' named_expression NEWLINE { 
+        RAISE_SYNTAX_ERROR("Ikki nuqta (:) kutilmoqda / 缺少冒号 (:) / कोलन (:) अपेक्षित है") }
+    | a='while' named_expression ':' NEWLINE !INDENT {
+        RAISE_INDENTATION_ERROR(
+            "%d-qatordagi 'while' operatoridan keyin surilgan blok (indent) kutilmoqda / "
+            "'while' 语句后的第 %d 行需要缩进块", a->lineno) }
+    | ['async'] 'for' star_targets 'in' star_expressions NEWLINE { 
+        RAISE_SYNTAX_ERROR("Ikki nuqta (:) kutilmoqda / 缺少冒号 (:) / कोलन (:) अपेक्षित है") }
+    | ['async'] a='for' star_targets 'in' star_expressions ':' NEWLINE !INDENT {
+        RAISE_INDENTATION_ERROR(
+            "%d-qatordagi 'for' operatoridan keyin surilgan blok (indent) kutilmoqda / "
+            "'for' 语句后的第 %d 行需要缩进块", a->lineno) }
+    | ['async'] a='def' NAME [type_params] '(' [params] ')' ['->' expression] ':' NEWLINE !INDENT {
+        RAISE_INDENTATION_ERROR(
+            "%d-qatordagi funksiya ta'rifidan keyin surilgan blok (indent) kutilmoqda / "
+            "函数定义后的第 %d 行需要缩进块 / "
+            "लाइन %d पर फ़ंक्शन परिभाषा के बाद एक इंडेंटेड ब्लॉक की आवश्यकता है", a->lineno) }
+
+    | 'class' NAME [type_params] ['(' [arguments] ')'] NEWLINE { 
+        RAISE_SYNTAX_ERROR(
+            "Ikki nuqta (:) kutilmoqda / 缺少冒号 (:) / कोलन (:) अपेक्षित है") }
+
+    | a='class' NAME [type_params] ['(' [arguments] ')'] ':' NEWLINE !INDENT {
+        RAISE_INDENTATION_ERROR(
+            "%d-qatordagi sinf (class) ta'rifidan keyin surilgan blok (indent) kutilmoqda / "
+            "类定义后的第 %d 行需要缩进块 / "
+            "लाइन %d पर क्लास परिभाषा के बाद एक इंडेंटेड ब्लॉक की आवश्यकता है", a->lineno) }
+
+Invalid_double_starred_kvpairs:
     | invalid_kvpair_unpacking [',']
     | ','.double_starred_kvpair+ ',' (invalid_kvpair | invalid_kvpair_unpacking)
-    | expression a=':' &('}'|',') { RAISE_SYNTAX_ERROR_KNOWN_LOCATION(a, "expression expected after dictionary key and ':'") }
-invalid_kvpair_unpacking:
+    | expression a=':' &('}'|',') { 
+        RAISE_SYNTAX_ERROR_KNOWN_LOCATION(a, 
+            "Lug'at kaliti va ':' belgisidan keyin ifoda (qiymat) kutilmoqda / "
+            "字典键和 ':' 后预期有表达式 / "
+            "डिक्शनरी कुंजी और ':' के बाद अभिव्यक्ति की अपेक्षा है") }
     | a='**' b=if_expression {
-        RAISE_SYNTAX_ERROR_KNOWN_RANGE(a, b, "invalid double starred expression. Did you forget to wrap the conditional expression in parentheses?") }
-    | a='*' b=bitwise_or ':' expression { RAISE_SYNTAX_ERROR_KNOWN_RANGE(a, b, "cannot use a starred expression in a dictionary key") }
-    | a='**' b=bitwise_or ':' expression { RAISE_SYNTAX_ERROR_KNOWN_RANGE(a, b, "cannot use dict unpacking in a dictionary key") }
-    | expression ':' a='*' b=bitwise_or { RAISE_SYNTAX_ERROR_KNOWN_RANGE(a, b, "cannot use a starred expression in a dictionary value") }
-    | expression ':' a='**' b=bitwise_or { RAISE_SYNTAX_ERROR_KNOWN_RANGE(a, b, "cannot use dict unpacking in a dictionary value") }
-invalid_kvpair:
+        RAISE_SYNTAX_ERROR_KNOWN_RANGE(a, b, 
+            "Noto'g'ri qo'sh yulduzchali ifoda. Shartli ifodani qavsga olishni unutdingizmi? / "
+            "无效的双星号表达式。是否忘记将条件表达式括在括号中？") }
+
+    | a='*' b=bitwise_or ':' expression { 
+        RAISE_SYNTAX_ERROR_KNOWN_RANGE(a, b, 
+            "Lug'at kalitida yulduzchali (*) ifodadan foydalanib bo'lmaydi / "
+            "不能在字典键中使用星号表达式 / शब्दकोश कुंजी में तारांकित अभिव्यक्ति का उपयोग नहीं कर सकते") }
+
+    | a='**' b=bitwise_or ':' expression { 
+        RAISE_SYNTAX_ERROR_KNOWN_RANGE(a, b, 
+            "Lug'at kalitida lug'atni yoyish (**) operatoridan foydalanib bo'lmaydi / 不能在字典键中使用字典解包") }
+
+    | expression ':' a='*' b=bitwise_or { 
+        RAISE_SYNTAX_ERROR_KNOWN_RANGE(a, b, 
+            "Lug'at qiymatida yulduzchali (*) ifodadan foydalanib bo'lmaydi / 不能在字典值中使用星号表达式") }
+
+    | expression ':' a='**' b=bitwise_or { 
+        RAISE_SYNTAX_ERROR_KNOWN_RANGE(a, b, 
+            "Lug'at qiymatida lug'atni yoyish (**) operatoridan foydalanib bo'lmaydi / 不能在字典值中使用字典解包") }
     | a=expression !(':') {
-        RAISE_ERROR_KNOWN_LOCATION(p, PyExc_SyntaxError, a->lineno, a->end_col_offset - 1, a->end_lineno, -1, "':' expected after dictionary key") }
-    | expression ':' a='*' bitwise_or { RAISE_SYNTAX_ERROR_STARTING_FROM(a, "cannot use a starred expression in a dictionary value") }
-    | expression ':' a='**' bitwise_or { RAISE_SYNTAX_ERROR_STARTING_FROM(a, "cannot use dict unpacking in a dictionary value") }
-    | expression a=':' &('}'|',') {RAISE_SYNTAX_ERROR_KNOWN_LOCATION(a, "expression expected after dictionary key and ':'") }
-invalid_starred_expression_unpacking:
+        RAISE_ERROR_KNOWN_LOCATION(p, PyExc_SyntaxError, a->lineno, a->end_col_offset - 1, a->end_lineno, -1, 
+            "Lug'at kalitidan keyin ':' kutilmoqda / 字典键后需要 ':' / डिक्शनरी कुंजी के बाद ':' अपेक्षित है") }
+    
+    | expression ':' a='*' bitwise_or { 
+        RAISE_SYNTAX_ERROR_STARTING_FROM(a, 
+            "Lug'at qiymatida yulduzchali (*) ifodadan foydalanib bo'lmaydi / 不能在字典值中使用星号表达式") }
+    
+    | expression ':' a='**' bitwise_or { 
+        RAISE_SYNTAX_ERROR_STARTING_FROM(a, 
+            "Lug'at qiymatida lug'atni yoyish (**) operatoridan foydalanib bo'lmaydi / 不能在字典值中使用字典解包") }
+    
+    | expression a=':' &('}'|',') {
+        RAISE_SYNTAX_ERROR_KNOWN_LOCATION(a, 
+            "Lug'at kaliti va ':' belgisidan keyin ifoda (qiymat) kutilmoqda / 字典键和 ':' 后预期有表达式") }
+
     | a='*' b=if_expression {
-        RAISE_SYNTAX_ERROR_KNOWN_RANGE(a, b, "invalid starred expression. Did you forget to wrap the conditional expression in parentheses?") }
-    | a='*' expression '=' b=expression { RAISE_SYNTAX_ERROR_KNOWN_RANGE(a, b, "cannot assign to iterable argument unpacking") }
-invalid_starred_expression_unpacking_sequence:
-    | a='**' bitwise_or {
-        RAISE_SYNTAX_ERROR_KNOWN_LOCATION(a, "cannot use dict unpacking here") }
+        RAISE_SYNTAX_ERROR_KNOWN_RANGE(a, b, 
+            "Noto'g'ri yulduzchali ifoda. Shartli ifodani qavsga olishni unutdingizmi? / "
+            "无效的星号表达式。是否忘记将条件表达式括在括号中？ / "
+            "अमान्य तारांकित अभिव्यक्ति। क्या आप सशर्त अभिव्यक्ति को कोष्ठक में लपेटना भूल गए?") }
+
+    | a='*' expression '=' b=expression { 
+        RAISE_SYNTAX_ERROR_KNOWN_RANGE(a, b, 
+            "Yoyilgan (iterable unpacking) argumentga qiymat berib bo'lmaydi / "
+            "不能给解包的可迭代参数赋值 / पुनरावृत्त तर्क अनपैकिंग को असाइन नहीं किया जा सकता") }
+
+        | a='**' bitwise_or {
+        RAISE_SYNTAX_ERROR_KNOWN_LOCATION(a, 
+            "Bu yerda lug'atni yoyish (**) operatoridan foydalanib bo'lmaydi / "
+            "此处不能使用字典解包 / "
+            "यहाँ डिक्शनरी अनपैकिंग का उपयोग नहीं किया जा सकता") }
     | invalid_starred_expression_unpacking
-invalid_starred_expression:
-    | '*' { RAISE_SYNTAX_ERROR("Invalid star expression") }
-invalid_fstring_replacement_field:
-    | '{' a='=' { RAISE_SYNTAX_ERROR_KNOWN_LOCATION(a, "f-string: valid expression required before '='") }
-    | '{' a='!' { RAISE_SYNTAX_ERROR_KNOWN_LOCATION(a, "f-string: valid expression required before '!'") }
-    | '{' a=':' { RAISE_SYNTAX_ERROR_KNOWN_LOCATION(a, "f-string: valid expression required before ':'") }
-    | '{' a='}' { RAISE_SYNTAX_ERROR_KNOWN_LOCATION(a, "f-string: valid expression required before '}'") }
-    | '{' !annotated_rhs { RAISE_SYNTAX_ERROR_ON_NEXT_TOKEN("f-string: expecting a valid expression after '{'") }
-    | '{' annotated_rhs !('=' | '!' | ':' | '}') {
-        PyErr_Occurred() ? NULL : RAISE_SYNTAX_ERROR_ON_NEXT_TOKEN("f-string: expecting '=', or '!', or ':', or '}'") }
-    | '{' annotated_rhs '=' !('!' | ':' | '}') {
-        PyErr_Occurred() ? NULL : RAISE_SYNTAX_ERROR_ON_NEXT_TOKEN("f-string: expecting '!', or ':', or '}'") }
-    | '{' annotated_rhs '='? invalid_fstring_conversion_character
-    | '{' annotated_rhs '='? ['!' NAME] !(':' | '}') {
-        PyErr_Occurred() ? NULL : RAISE_SYNTAX_ERROR_ON_NEXT_TOKEN("f-string: expecting ':' or '}'") }
-    | '{' annotated_rhs '='? ['!' NAME] ':' fstring_format_spec* !'}' {
-        PyErr_Occurred() ? NULL : RAISE_SYNTAX_ERROR_ON_NEXT_TOKEN("f-string: expecting '}', or format specs") }
-    | '{' annotated_rhs '='? ['!' NAME] !'}' {
+
+        | '{' annotated_rhs !('=' | '!' | ':' | '}') {
+        RAISE_SYNTAX_ERROR_ON_NEXT_TOKEN(
+            "f-string: '}', '!', ':', yoki '=' kutilmoqda / "
+            "f-string: 期待 '}', '!', ':' 或 '=' / "
+            "f-string: '}', '!', ':', या '=' अपेक्षित है") }
+
+            | '{' annotated_rhs '='? ['!' NAME] !'}' {
         PyErr_Occurred() ? NULL : RAISE_SYNTAX_ERROR_ON_NEXT_TOKEN("f-string: expecting '}'") }
+    | '{' (yield_expr | invalid_yield_expr) [':' fstring_format_spec*] '}' {
+        RAISE_SYNTAX_ERROR("f-string: yield expression can't be used in f-string") }
 
 invalid_fstring_conversion_character:
-    | '!' &(':' | '}') { RAISE_SYNTAX_ERROR_ON_NEXT_TOKEN("f-string: missing conversion character") }
-    | '!' !NAME { RAISE_SYNTAX_ERROR_ON_NEXT_TOKEN("f-string: invalid conversion character") }
+    | '!' !NAME { 
+        RAISE_SYNTAX_ERROR("f-string: conversion character expected after '!'") }
+    | '!' name=NAME {
+        (strcmp(name->v.Name.id, "s") && strcmp(name->v.Name.id, "r") && strcmp(name->v.Name.id, "a")) ?
+        RAISE_SYNTAX_ERROR("f-string: invalid conversion character: expected 's', 'r', or 'a'") : NULL }
 
-invalid_tstring_replacement_field:
-    | '{' a='=' { RAISE_SYNTAX_ERROR_KNOWN_LOCATION(a, "t-string: valid expression required before '='") }
-    | '{' a='!' { RAISE_SYNTAX_ERROR_KNOWN_LOCATION(a, "t-string: valid expression required before '!'") }
-    | '{' a=':' { RAISE_SYNTAX_ERROR_KNOWN_LOCATION(a, "t-string: valid expression required before ':'") }
-    | '{' a='}' { RAISE_SYNTAX_ERROR_KNOWN_LOCATION(a, "t-string: valid expression required before '}'") }
-    | '{' !annotated_rhs { RAISE_SYNTAX_ERROR_ON_NEXT_TOKEN("t-string: expecting a valid expression after '{'") }
+invalid_fstring_conversion_character:
+    | '!' &(':' | '}') { 
+        RAISE_SYNTAX_ERROR_ON_NEXT_TOKEN("f-string: missing conversion character / f-string: konvertatsiya belgisi yetishmayapti") }
+    | '!' !NAME { 
+        RAISE_SYNTAX_ERROR_ON_NEXT_TOKEN("f-string: invalid conversion character / f-string: noto'g'ri konvertatsiya belgisi") }
+    | '!' name=NAME {
+        (strcmp(name->v.Name.id, "s") && strcmp(name->v.Name.id, "r") && strcmp(name->v.Name.id, "a")) ?
+        RAISE_SYNTAX_ERROR("f-string: invalid conversion character: expected 's', 'r', or 'a'") : NULL }
+
     | '{' annotated_rhs !('=' | '!' | ':' | '}') {
         PyErr_Occurred() ? NULL : RAISE_SYNTAX_ERROR_ON_NEXT_TOKEN("t-string: expecting '=', or '!', or ':', or '}'") }
     | '{' annotated_rhs '=' !('!' | ':' | '}') {
@@ -1608,15 +1845,32 @@ invalid_tstring_replacement_field:
     | '{' annotated_rhs '='? invalid_tstring_conversion_character
     | '{' annotated_rhs '='? ['!' NAME] !(':' | '}') {
         PyErr_Occurred() ? NULL : RAISE_SYNTAX_ERROR_ON_NEXT_TOKEN("t-string: expecting ':' or '}'") }
-    | '{' annotated_rhs '='? ['!' NAME] ':' fstring_format_spec* !'}' {
+    | '{' annotated_rhs '='? ['!' NAME] ':' tstring_format_spec* !'}' {
         PyErr_Occurred() ? NULL : RAISE_SYNTAX_ERROR_ON_NEXT_TOKEN("t-string: expecting '}', or format specs") }
     | '{' annotated_rhs '='? ['!' NAME] !'}' {
         PyErr_Occurred() ? NULL : RAISE_SYNTAX_ERROR_ON_NEXT_TOKEN("t-string: expecting '}'") }
 
-invalid_tstring_conversion_character:
-    | '!' &(':' | '}') { RAISE_SYNTAX_ERROR_ON_NEXT_TOKEN("t-string: missing conversion character") }
-    | '!' !NAME { RAISE_SYNTAX_ERROR_ON_NEXT_TOKEN("t-string: invalid conversion character") }
+            | '{' annotated_rhs '='? ['!' NAME] !'}' {
+        PyErr_Occurred() ? NULL : RAISE_SYNTAX_ERROR_ON_NEXT_TOKEN("t-string: expecting '}'") }
+    | '{' (yield_expr | invalid_yield_expr) [':' fstring_format_spec*] '}' {
+        RAISE_SYNTAX_ERROR("t-string: yield expression can't be used in t-string") }
 
+invalid_tstring_conversion_character:
+    | '!' &(':' | '}') { 
+        RAISE_SYNTAX_ERROR_ON_NEXT_TOKEN("t-string: missing conversion character") }
+    | '!' !NAME { 
+        RAISE_SYNTAX_ERROR_ON_NEXT_TOKEN("t-string: invalid conversion character") }
+    | '!' name=NAME {
+        (strcmp(name->v.Name.id, "s") && strcmp(name->v.Name.id, "r") && strcmp(name->v.Name.id, "a")) ?
+        RAISE_SYNTAX_ERROR("t-string: invalid conversion character: expected 's', 'r', or 'a'") : NULL }
+invalid_tstring_conversion_character:
+    | '!' &(':' | '}') { 
+        RAISE_SYNTAX_ERROR_ON_NEXT_TOKEN("t-string: missing conversion character") }
+    | '!' !NAME { 
+        RAISE_SYNTAX_ERROR_ON_NEXT_TOKEN("t-string: invalid conversion character") }
+    | '!' name=NAME {
+        (strcmp(name->v.Name.id, "s") && strcmp(name->v.Name.id, "r") && strcmp(name->v.Name.id, "a")) ?
+        RAISE_SYNTAX_ERROR("t-string: invalid conversion character: expected 's', 'r', or 'a'") : NULL }
 invalid_string_tstring_concat:
     | a=(fstring|string)+ b[expr_ty]=tstring {
         RAISE_SYNTAX_ERROR_KNOWN_RANGE(PyPegen_last_item(a, expr_ty), b, "cannot mix t-string literals with string or bytes literals") }
