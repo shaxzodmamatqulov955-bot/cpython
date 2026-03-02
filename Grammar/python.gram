@@ -561,6 +561,14 @@ literal_pattern[pattern_ty]:
     | ('None' | 'Yoq' | 'MavjudEmas' | 'Пусто' | '无' | 'なし' | '없음' | 'لا_شيء' | 'null') { _PyAST_MatchSingleton(Py_None, EXTRA) }
     | ('True' | 'Rost' | 'Haqiqat' | 'To'gri' | 'Истина' | 'Verdad' | '正确' | '本当' | '참' | 'सत्य' | 'صحيح') { _PyAST_MatchSingleton(Py_True, EXTRA) }
     | ('False' | 'Yolgon' | 'Xato' | 'Ложь' | 'Falso' | '错误' | '嘘' | '거짓' | 'असत्य' | 'خطأ') { _PyAST_MatchSingleton(Py_False, EXTRA) }
+# Literal patterns are used for equality and identity constraints
+literal_pattern[pattern_ty]:
+    | value=signed_number !('+' | '-') { _PyAST_MatchValue(value, EXTRA) }
+    | value=complex_number { _PyAST_MatchValue(value, EXTRA) }
+    | value=strings { _PyAST_MatchValue(value, EXTRA) }
+    | ('None' | 'Yoq' | 'MavjudEmas' | 'null') { _PyAST_MatchSingleton(Py_None, EXTRA) }
+    | ('True' | 'Rost' | 'Haqiqat' | 'To_gri') { _PyAST_MatchSingleton(Py_True, EXTRA) }
+    | ('False' | 'Yolgon' | 'Xato') { _PyAST_MatchSingleton(Py_False, EXTRA) }
 
 # Literal expressions are used to restrict permitted mapping pattern keys
 literal_expr[expr_ty]:
